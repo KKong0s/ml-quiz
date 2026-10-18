@@ -1,0 +1,3542 @@
+{
+  "course": "0452330267 การเรียนรู้ของเครื่องขั้นสูง 1/2569",
+  "modules": [
+    {
+      "id": "m3",
+      "name": "Module 3 · Object Detection & Segmentation"
+    },
+    {
+      "id": "m4",
+      "name": "Module 4 · RNN, LSTM, Attention & Transformer"
+    },
+    {
+      "id": "m5",
+      "name": "Module 5 · ข้อมูล การเตรียมข้อมูล และการฝึกโมเดล"
+    },
+    {
+      "id": "m6",
+      "name": "Module 6 · การประเมินผลและการจูน hyperparameter"
+    },
+    {
+      "id": "m7",
+      "name": "Module 7 · การบันทึกโมเดลและการ Deploy"
+    },
+    {
+      "id": "m8",
+      "name": "Module 8 · การประยุกต์ใช้และวงจรชีวิตโปรเจกต์"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q3959",
+      "source": "IMG_3959.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Mask R-CNN เพิ่มกิ่งใดจาก Faster R-CNN",
+      "options": [
+        "กิ่งเพิ่มจำนวนกรอบที่เสนอโดย RPN",
+        "กิ่งทำนาย mask ระดับพิกเซล",
+        "กิ่งคำนวณค่า IoU ระหว่างกรอบทั้งหมด",
+        "กิ่งแปลงภาพสีให้เป็นภาพขาวดำ",
+        "กิ่งปรับความสว่างของภาพอินพุต"
+      ],
+      "answer": 1,
+      "explanation": "Mask R-CNN ใช้โครง Faster R-CNN เดิมทั้งหมด แล้วเพิ่มกิ่งที่สามขนานกับกิ่งจำแนกคลาสและกิ่งกรอบ เพื่อทำนาย mask ระดับพิกเซลของแต่ละวัตถุ"
+    },
+    {
+      "id": "q3960",
+      "source": "IMG_3960.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "YOLO-seg ต่างจาก Mask R-CNN ด้านประเภทสถาปัตยกรรม",
+      "options": [
+        "YOLO-seg ไม่มีขั้นตอนการจำแนกคลาสเลย",
+        "ทั้งสองเป็น One-stage เหมือนกันทุกประการ",
+        "ทั้งสองเป็น Two-stage เหมือนกันทุกประการ",
+        "YOLO-seg Two-stage ส่วน Mask R-CNN One-stage",
+        "YOLO-seg One-stage ส่วน Mask R-CNN Two-stage"
+      ],
+      "answer": 4,
+      "explanation": "YOLO-seg ทำนายกรอบ คลาส และ mask ในรอบเดียว (one-stage) ส่วน Mask R-CNN ต้องเสนอบริเวณด้วย RPN ก่อนแล้วจึงจำแนก (two-stage)"
+    },
+    {
+      "id": "q3961",
+      "source": "IMG_3961.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Two-Stage เช่น Faster R-CNN ทำงานอย่างไร",
+      "options": [
+        "เสนอบริเวณที่น่าจะมีวัตถุก่อน แล้วจึงจำแนกคลาสในขั้นตอนที่สอง",
+        "แบ่งภาพเป็นตารางแล้วให้แต่ละช่องทำนายผลพร้อมกัน",
+        "ขยายขนาด feature map กลับคืนก่อนจำแนกคลาส",
+        "ใช้เพียงชั้น Fully-Connected ในการจำแนกวัตถุทั้งภาพ",
+        "ทำนายกรอบและคลาสในครั้งเดียวโดยไม่แบ่งขั้นตอน"
+      ],
+      "answer": 0,
+      "explanation": "Two-stage แบ่งเป็นขั้นแรกเสนอบริเวณที่น่าจะมีวัตถุ (region proposal) และขั้นที่สองจำแนกคลาสกับปรับกรอบให้แม่นขึ้น"
+    },
+    {
+      "id": "m3962",
+      "source": "IMG_3962.JPG",
+      "module": "m3",
+      "type": "match",
+      "question": "จับคู่คำศัพท์ของ Lesson 3.1 (Object Detection) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "mAP",
+          "answer": "ตัวชี้วัดมาตรฐานที่พิจารณาทั้งความแม่นของกรอบและความถูกต้องของคลาส"
+        },
+        {
+          "term": "Anchor Box",
+          "answer": "กรอบอ้างอิงหลายขนาดและอัตราส่วนที่วางไว้ล่วงหน้าทั่วภาพ"
+        },
+        {
+          "term": "NMS",
+          "answer": "ขั้นตอนกำจัดกรอบซ้ำโดยเก็บกรอบที่มั่นใจสูงสุดไว้"
+        },
+        {
+          "term": "Confidence Score",
+          "answer": "คะแนนความมั่นใจว่ากรอบมีวัตถุจริงและจำแนกถูก"
+        },
+        {
+          "term": "RPN",
+          "answer": "เครือข่ายเล็กที่เสนอบริเวณที่น่าจะมีวัตถุใน Faster R-CNN"
+        },
+        {
+          "term": "IoU",
+          "answer": "การวัดความซ้อนทับระหว่างกรอบที่ทำนายกับกรอบจริงของวัตถุ"
+        }
+      ]
+    },
+    {
+      "id": "q3963",
+      "source": "IMG_3963.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "RoIAlign ใช้เทคนิคใดแทนการปัดเศษพิกัด",
+      "options": [
+        "Data Augmentation",
+        "Max Pooling",
+        "Non-Maximum Suppression",
+        "Bilinear Interpolation",
+        "Batch Normalization"
+      ],
+      "answer": 3,
+      "explanation": "RoIAlign ไม่ปัดพิกัดทศนิยมทิ้ง แต่ใช้ bilinear interpolation ประมาณค่า feature ที่ตำแหน่งจริง"
+    },
+    {
+      "id": "q3964",
+      "source": "IMG_3964.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Recall ตอบคำถามใดเกี่ยวกับผลการตรวจจับ",
+      "options": [
+        "สิ่งที่โมเดลตรวจเจอทั้งหมด ถูกต้องกี่เปอร์เซ็นต์",
+        "วัตถุจริงทั้งหมดในภาพ โมเดลตรวจเจอกี่เปอร์เซ็นต์",
+        "ภาพที่ใช้ทดสอบมีความละเอียดเท่าใดโดยเฉลี่ย",
+        "โมเดลมีพารามิเตอร์ทั้งหมดกี่ล้านตัว",
+        "กรอบที่ทำนายได้ทับซ้อนกันเองกี่เปอร์เซ็นต์"
+      ],
+      "answer": 1,
+      "explanation": "Recall = TP / (TP + FN) ตอบว่าวัตถุจริงทั้งหมดมีอยู่เท่าไร โมเดลหาเจอกี่เปอร์เซ็นต์ (ตัวเลือก a คือ Precision)"
+    },
+    {
+      "id": "q3965",
+      "source": "IMG_3965.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Anchor Box คืออะไร",
+      "options": [
+        "เส้นขอบของวัตถุจริงที่มนุษย์ติดป้ายกำกับไว้ล่วงหน้า",
+        "กรอบต้นแบบหลายขนาดและอัตราส่วนที่วางไว้ล่วงหน้าทั่วภาพให้โมเดลปรับแต่ง",
+        "พื้นที่ส่วนซ้อนทับระหว่างกรอบทำนายกับกรอบจริง",
+        "กรอบสุดท้ายที่โมเดลเลือกแสดงผลหลังกำจัดกรอบซ้ำแล้ว",
+        "ค่าความมั่นใจที่โมเดลให้กับแต่ละกรอบที่ทำนาย"
+      ],
+      "answer": 1,
+      "explanation": "Anchor box คือกรอบตั้งต้นหลายขนาดหลายอัตราส่วนวางไว้ทั่วภาพ โมเดลเรียนรู้แค่ค่าที่ต้องเลื่อนและปรับขนาดจากกรอบเหล่านี้"
+    },
+    {
+      "id": "q3966",
+      "source": "IMG_3966.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Transposed Convolution ต่างจาก Nearest/Bilinear Interpolation ในการ Upsampling อย่างไร",
+      "options": [
+        "Transposed Conv ใช้ได้เฉพาะภาพขาวดำ",
+        "Nearest/Bilinear เรียนรู้น้ำหนักได้ แต่ Transposed Conv ไม่ได้",
+        "ทั้งสองวิธีใช้ใน Encoder-Decoder ไม่ได้",
+        "Transposed Conv เรียนรู้น้ำหนักได้ ส่วนอีกสองวิธีเป็นการประมาณค่าแบบคงที่",
+        "Transposed Conv ลดขนาดภาพ ส่วนอีกสองวิธีขยาย"
+      ],
+      "answer": 3,
+      "explanation": "Transposed convolution มีเคอร์เนลที่เรียนรู้น้ำหนักได้ ส่วน nearest/bilinear เป็นการประมาณค่าด้วยสูตรตายตัว ไม่มีพารามิเตอร์ให้เรียนรู้"
+    },
+    {
+      "id": "q3967",
+      "source": "IMG_3967.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "ทำไม FCN รับภาพขนาดใดก็ได้",
+      "options": [
+        "ใช้ Transposed Conv อย่างเดียวตลอดโมเดล",
+        "ไม่มีการใช้ Pooling เลย",
+        "ปรับขนาดทุกภาพให้เท่ากันก่อนเข้าโมเดลเสมอ",
+        "ไม่มีชั้น Fully-Connected ที่บังคับขนาดอินพุตให้คงที่",
+        "ใช้ skip connection แทน Convolution ทั้งหมด"
+      ],
+      "answer": 3,
+      "explanation": "ชั้น fully-connected ต้องการอินพุตขนาดคงที่ FCN เปลี่ยนทุกชั้นเป็น convolution จึงรับภาพขนาดใดก็ได้"
+    },
+    {
+      "id": "q3968",
+      "source": "IMG_3968.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "สามสิ่งที่ Object Detection ต้องตอบพร้อมกัน",
+      "options": [
+        "มั่นใจแค่ไหน เคลื่อนที่เร็วแค่ไหน มีกี่ชิ้น",
+        "มีวัตถุอะไร สีอะไร หนักเท่าไร",
+        "มีวัตถุอะไร อยู่ที่ไหน มั่นใจแค่ไหน",
+        "อยู่ที่ไหน ใหญ่แค่ไหน ใครเป็นเจ้าของ",
+        "มีวัตถุอะไร ถ่ายจากมุมไหน แสงเป็นอย่างไร"
+      ],
+      "answer": 2,
+      "explanation": "Object detection ต้องตอบว่าเป็นวัตถุอะไร (คลาส) อยู่ตรงไหน (กรอบ) และมั่นใจแค่ไหน (confidence score)"
+    },
+    {
+      "id": "q3969",
+      "source": "IMG_3969.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Object Detection ต่างจาก Image Classification",
+      "options": [
+        "Detection ทำงานเฉพาะวัตถุใหญ่",
+        "Detection ต้องระบุตำแหน่งและคลาสของวัตถุ ส่วน Classification ระบุเพียงคลาสของภาพทั้งภาพ",
+        "Detection ระบุคลาสทุกพิกเซล ส่วน Classification ระบุเฉพาะขอบภาพ",
+        "Detection ใช้กับภาพขาวดำเท่านั้น",
+        "Detection ไม่ต้องใช้ CNN"
+      ],
+      "answer": 1,
+      "explanation": "Classification ให้คลาสเดียวกับทั้งภาพ ส่วน detection ต้องระบุทั้งคลาสและตำแหน่งของวัตถุแต่ละชิ้น"
+    },
+    {
+      "id": "q3970",
+      "source": "IMG_3970.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "FCN-8s ละเอียดกว่า FCN-32s เพราะ",
+      "options": [
+        "ใช้พารามิเตอร์มากกว่าหลายเท่า",
+        "ตัดชั้น Convolution ส่วนลึกออกทั้งหมด",
+        "ฝึกด้วยภาพมากกว่าอย่างมีนัยสำคัญ",
+        "รวมข้อมูลจากชั้นตื้นที่มีรายละเอียดเชิงพื้นที่มากกว่าเข้ามาด้วย",
+        "ขยายขนาดภาพทีเดียวในขั้นสุดท้ายครั้งเดียว"
+      ],
+      "answer": 3,
+      "explanation": "FCN-8s รวม feature จากชั้นตื้น (pool3, pool4) ที่ยังเก็บรายละเอียดตำแหน่งไว้ ขอบของผลลัพธ์จึงละเอียดกว่า FCN-32s ที่ขยายจากชั้นลึกสุดทีเดียว 32 เท่า"
+    },
+    {
+      "id": "q3971",
+      "source": "IMG_3971.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Mask R-CNN ต่อยอดจากสถาปัตยกรรมใด",
+      "options": [
+        "YOLO",
+        "U-Net",
+        "SSD",
+        "FCN",
+        "Faster R-CNN"
+      ],
+      "answer": 4,
+      "explanation": "Mask R-CNN (He et al., 2017) ต่อยอดจาก Faster R-CNN โดยเพิ่มกิ่ง mask และเปลี่ยน RoIPool เป็น RoIAlign"
+    },
+    {
+      "id": "q3973",
+      "source": "IMG_3973.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "SSD ทำนายอย่างไร",
+      "options": [
+        "ทำนายกรอบและคลาสในครั้งเดียวจาก feature map หลายระดับ",
+        "เสนอบริเวณก่อนแล้วจำแนกในขั้นที่สองเสมอ",
+        "ทำงานได้เฉพาะวัตถุใหญ่",
+        "ใช้เฉพาะ feature map ความละเอียดสูงสุดระดับเดียว",
+        "ต้องฝึกแยกสองโมเดลสำหรับกรอบและคลาส"
+      ],
+      "answer": 0,
+      "explanation": "SSD เป็น one-stage ทำนายกรอบและคลาสในรอบเดียวจาก feature map หลายระดับ จึงจับได้ทั้งวัตถุเล็กและใหญ่"
+    },
+    {
+      "id": "q3974",
+      "source": "IMG_3974.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "IoU ใช้วัดอะไร",
+      "options": [
+        "ความเร็วในการประมวลผล",
+        "ความซ้อนทับระหว่างกรอบที่ทำนายกับกรอบจริงของวัตถุ",
+        "จำนวนคลาสที่จำแนกได้",
+        "จำนวนกรอบที่ทำนายได้ในหนึ่งภาพ",
+        "ความสว่างเฉลี่ยของพิกเซลในกรอบ"
+      ],
+      "answer": 1,
+      "explanation": "IoU = พื้นที่ซ้อนทับ / พื้นที่รวม ของกรอบทำนายกับกรอบจริง ใช้วัดว่ากรอบตรงตำแหน่งแค่ไหน"
+    },
+    {
+      "id": "q3975",
+      "source": "IMG_3975.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Precision ตอบคำถามใด",
+      "options": [
+        "วัตถุจริงทั้งหมด โมเดลตรวจเจอกี่%",
+        "กรอบที่ทำนายใหญ่กว่าวัตถุจริงกี่%",
+        "ภาพฝึกติดป้ายถูกกี่%",
+        "สิ่งที่โมเดลตรวจเจอทั้งหมด ถูกต้องกี่เปอร์เซ็นต์",
+        "เวลาประมวลผลเฉลี่ยต่อภาพ"
+      ],
+      "answer": 3,
+      "explanation": "Precision = TP / (TP + FP) ตอบว่าสิ่งที่โมเดลบอกว่าเจอ ถูกจริงกี่เปอร์เซ็นต์"
+    },
+    {
+      "id": "q3976",
+      "source": "IMG_3976.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "ชื่อ YOLO สื่อถึงแนวคิดใด",
+      "options": [
+        "มองภาพทีละพิกเซลแล้วรวมผลเป็นกรอบ",
+        "มองภาพเพียงครั้งเดียวแล้วทำนายกรอบและคลาสพร้อมกันทั้งภาพ",
+        "มองเฉพาะกลางภาพแล้วขยายผล",
+        "มองภาพหลายครั้งซ้อนกันเพื่อเพิ่มความแม่นยำ",
+        "มองภาพครั้งเดียวแล้วเก็บไว้ใช้ซ้ำในการฝึกรอบถัดไป"
+      ],
+      "answer": 1,
+      "explanation": "You Only Look Once คือมองภาพครั้งเดียวผ่านโครงข่ายรอบเดียว แล้วทำนายกรอบและคลาสของทั้งภาพพร้อมกัน"
+    },
+    {
+      "id": "q3978",
+      "source": "IMG_3978.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "จุดเด่นสำคัญของ U-Net",
+      "options": [
+        "ไม่มี decoder",
+        "ทำงานได้ดีแม้มีข้อมูลฝึกน้อย",
+        "ใช้ร่วมกับ data augmentation ไม่ได้",
+        "ทำงานเฉพาะภาพใหญ่กว่า 1000x1000",
+        "ต้องการข้อมูลฝึกมากกว่าเสมอ"
+      ],
+      "answer": 1,
+      "explanation": "U-Net ออกแบบมาสำหรับภาพชีวการแพทย์ที่มีข้อมูลน้อย ด้วย skip connection และ data augmentation จึงฝึกได้ดีแม้มีภาพไม่มาก"
+    },
+    {
+      "id": "q3979",
+      "source": "IMG_3979.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Skip Connection ใน U-Net ทำหน้าที่อะไร",
+      "options": [
+        "เชื่อม encoder เข้ากับ loss function โดยตรงจุดเดียว",
+        "เพิ่มจำนวนคลาสที่จำแนกได้ในแต่ละพิกเซล",
+        "นำ feature map จาก encoder มาต่อรวมกับ decoder ที่ขนาดเท่ากัน",
+        "ลบ feature map ของ encoder ทิ้งก่อนเข้า decoder",
+        "ลดจำนวนชั้น Pooling ฝั่ง encoder ทั้งหมด"
+      ],
+      "answer": 2,
+      "explanation": "Skip connection ของ U-Net ต่อ (concatenate) feature map จาก encoder เข้ากับ decoder ที่ระดับขนาดเดียวกัน เพื่อคืนรายละเอียดตำแหน่ง"
+    },
+    {
+      "id": "q3980",
+      "source": "IMG_3980.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Dice Loss เหมาะกับกรณีใด",
+      "options": [
+        "งานจำแนกภาพทั้งภาพที่ไม่ใช่ segmentation",
+        "งานที่ใช้ภาพขาวดำอย่างเดียว",
+        "ข้อมูลมีจำนวนคลาสเท่ากันสมบูรณ์",
+        "งานที่ไม่มีพื้นหลังเลย",
+        "ข้อมูลไม่สมดุล เช่น บริเวณเป้าหมายเล็กมากเทียบกับพื้นหลัง"
+      ],
+      "answer": 4,
+      "explanation": "Dice loss วัดการซ้อนทับของ mask โดยตรง จึงไม่ถูกพื้นหลังที่มีจำนวนพิกเซลมหาศาลกลบ เหมาะเมื่อเป้าหมายเล็กมาก"
+    },
+    {
+      "id": "q3981",
+      "source": "IMG_3981.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Encoder-Decoder ถูกใช้ใน Segmentation เพราะ",
+      "options": [
+        "ให้ encoder เข้าใจว่ามีอะไร และ decoder กู้คืนตำแหน่งกลับมา",
+        "ให้ encoder และ decoder จำแนกคลาสพร้อมกันตลอดเวลา",
+        "ลดพารามิเตอร์ให้น้อยที่สุดเท่านั้น",
+        "เปลี่ยนภาพสีเป็นขาวดำก่อน",
+        "ฝึกได้โดยไม่ต้องมีป้ายกำกับ"
+      ],
+      "answer": 0,
+      "explanation": "Encoder ลดขนาดภาพเพื่อสกัดความหมายว่ามีอะไร decoder ขยายกลับเพื่อบอกว่าอยู่ตรงไหนในระดับพิกเซล"
+    },
+    {
+      "id": "q3982",
+      "source": "IMG_3982.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "จุดเด่นของ Two-Stage เทียบกับ One-Stage",
+      "options": [
+        "ไม่ต้องฝึกด้วยข้อมูลมีป้ายกำกับ",
+        "เหมาะกับงานเรียลไทม์บน edge device ที่สุด",
+        "มีความแม่นยำสูง โดยเฉพาะกับวัตถุขนาดเล็ก",
+        "เร็วที่สุดในกลุ่ม",
+        "ใช้หน่วยความจำน้อยที่สุด"
+      ],
+      "answer": 2,
+      "explanation": "Two-stage เช่น Faster R-CNN มักแม่นกว่า โดยเฉพาะวัตถุเล็ก แลกกับความเร็วที่ช้ากว่า one-stage"
+    },
+    {
+      "id": "q3983",
+      "source": "IMG_3983.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "ความแตกต่างหลัก Instance vs Semantic Segmentation",
+      "options": [
+        "Semantic ใช้ได้เฉพาะภาพขาวดำ",
+        "Instance แยกวัตถุชนิดเดียวกันออกเป็นชิ้น ๆ ได้ แต่ Semantic ไม่ได้",
+        "Instance ระบุขอบเขตระดับพิกเซลไม่ได้",
+        "Instance เร็วกว่า Semantic เสมอ",
+        "Semantic แยกวัตถุชนิดเดียวกันเป็นชิ้น ๆ ได้ แต่ Instance ไม่ได้"
+      ],
+      "answer": 1,
+      "explanation": "Instance segmentation แยกวัตถุชนิดเดียวกันเป็นชิ้น ๆ (คน 1, คน 2) ส่วน semantic ระบุเพียงว่าพิกเซลนี้คือคลาส \"คน\""
+    },
+    {
+      "id": "q3985",
+      "source": "IMG_3985.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Instance Segmentation รวมแนวคิดของงานใด",
+      "options": [
+        "Object Detection และ Data Augmentation เท่านั้น",
+        "Image Classification และ Object Detection เท่านั้น",
+        "Object Detection และ Semantic Segmentation",
+        "Semantic Segmentation และ Image Classification เท่านั้น",
+        "Semantic Segmentation และ Transfer Learning เท่านั้น"
+      ],
+      "answer": 2,
+      "explanation": "Instance segmentation = detection (แยกรายชิ้น) + semantic segmentation (mask ระดับพิกเซล)"
+    },
+    {
+      "id": "m3986",
+      "source": "IMG_3986.JPG",
+      "module": "m3",
+      "type": "match",
+      "question": "จับคู่คำศัพท์ของ Lesson 3.2 (Semantic Segmentation) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Decoder",
+          "answer": "ส่วนที่ขยายขนาดภาพกลับและคืนรายละเอียดเชิงตำแหน่ง"
+        },
+        {
+          "term": "FCN",
+          "answer": "สถาปัตยกรรมที่แทน Fully-Connected ด้วยชั้น Convolution ทั้งหมด"
+        },
+        {
+          "term": "Encoder",
+          "answer": "ส่วนที่ลดขนาดภาพและสกัดคุณลักษณะเชิงความหมาย"
+        },
+        {
+          "term": "Transposed Convolution",
+          "answer": "วิธี upsampling ที่เรียนรู้น้ำหนักได้"
+        },
+        {
+          "term": "Dice Loss",
+          "answer": "ฟังก์ชันสูญเสียที่เหมาะกับข้อมูลไม่สมดุล"
+        },
+        {
+          "term": "Skip Connection",
+          "answer": "การต่อรวม feature map จาก encoder กับ decoder ที่ขนาดเท่ากัน"
+        }
+      ]
+    },
+    {
+      "id": "q3987",
+      "source": "IMG_3987.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "ตามเนื้อหา ถือว่าตรวจจับ \"ถูกตำแหน่ง\" เมื่อ IoU อยู่ในเกณฑ์ใด",
+      "options": [
+        "ตั้งแต่ 0.9 ขึ้นไป",
+        "ตั้งแต่ 0.5 ขึ้นไป",
+        "ต่ำกว่า 0.3",
+        "เท่ากับ 1.0 เท่านั้น",
+        "ตั้งแต่ 0.1 ขึ้นไป"
+      ],
+      "answer": 1,
+      "explanation": "เกณฑ์มาตรฐานที่ใช้กันทั่วไป (เช่น PASCAL VOC, mAP@0.5) ถือว่าตรวจจับถูกตำแหน่งเมื่อ IoU ≥ 0.5"
+    },
+    {
+      "id": "q3989",
+      "source": "IMG_3989.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Semantic Segmentation คืองานที่ทำอะไร",
+      "options": [
+        "จำแนกคลาสให้ภาพทั้งภาพหนึ่งคลาส",
+        "ระบุกรอบสี่เหลี่ยมล้อมวัตถุแต่ละชิ้น",
+        "แยกวัตถุชนิดเดียวกันออกเป็นชิ้น ๆ",
+        "จำแนกคลาสให้กับพิกเซลทุกจุดในภาพ",
+        "นับจำนวนวัตถุทั้งหมด"
+      ],
+      "answer": 3,
+      "explanation": "Semantic segmentation จำแนกคลาสให้ทุกพิกเซลในภาพ แต่ไม่แยกว่าเป็นวัตถุชิ้นไหน"
+    },
+    {
+      "id": "m3990",
+      "source": "IMG_3990.JPG",
+      "module": "m3",
+      "type": "match",
+      "question": "จับคู่คำศัพท์ของ Lesson 3.3 (Instance Segmentation) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Mask R-CNN",
+          "answer": "ต่อยอดจาก Faster R-CNN โดยเพิ่มกิ่งทำนาย mask"
+        },
+        {
+          "term": "YOLO-seg",
+          "answer": "ทางเลือกแบบ one-stage สำหรับ instance segmentation แบบเรียลไทม์"
+        },
+        {
+          "term": "RoIAlign",
+          "answer": "ใช้ bilinear interpolation แก้ปัญหาการเยื้องตำแหน่ง"
+        },
+        {
+          "term": "Recall",
+          "answer": "สัดส่วนของวัตถุจริงที่ตรวจเจอได้เทียบกับวัตถุจริงทั้งหมด"
+        },
+        {
+          "term": "Precision",
+          "answer": "สัดส่วนของสิ่งที่ตรวจเจอที่ถูกต้องจริงเทียบกับที่ตรวจเจอทั้งหมด"
+        },
+        {
+          "term": "F1-score",
+          "answer": "ค่าเฉลี่ยฮาร์มอนิกระหว่าง Precision และ Recall"
+        }
+      ]
+    },
+    {
+      "id": "q3991",
+      "source": "IMG_3991.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "U-Net ออกแบบมาเพื่องานด้านใดเป็นอันดับแรก",
+      "options": [
+        "วิดีโอเรียลไทม์บน edge",
+        "ภาพใบหน้าสำหรับยืนยันตัวบุคคล",
+        "ภาพเอกสารสำหรับรู้จำตัวอักษร",
+        "ภาพดาวเทียมด้านเกษตร",
+        "ภาพทางชีวการแพทย์ (biomedical)"
+      ],
+      "answer": 4,
+      "explanation": "U-Net (Ronneberger et al., 2015) ถูกเสนอสำหรับแบ่งส่วนภาพชีวการแพทย์ เช่น เซลล์จากกล้องจุลทรรศน์"
+    },
+    {
+      "id": "q3992",
+      "source": "IMG_3992.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "RoIAlign แก้ปัญหาใดของ RoIPool",
+      "options": [
+        "ความเร็วช้าเกินไป",
+        "การเยื้องตำแหน่งจากการปัดเศษพิกัด",
+        "รับภาพต่างขนาดไม่ได้",
+        "ใช้หน่วยความจำมากเกินไป",
+        "จำแนกคลาสผิดบ่อยในวัตถุใหญ่"
+      ],
+      "answer": 1,
+      "explanation": "RoIPool ปัดพิกัดเป็นจำนวนเต็มทำให้ feature เยื้องจากตำแหน่งจริง ซึ่งกระทบ mask ระดับพิกเซลมาก RoIAlign จึงเลิกปัดเศษ"
+    },
+    {
+      "id": "q3993",
+      "source": "IMG_3993.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "Decoder ใน Encoder-Decoder มีหน้าที่หลักอะไร",
+      "options": [
+        "คำนวณความมั่นใจของกรอบ",
+        "ขยายขนาดกลับและคืนรายละเอียดเชิงตำแหน่งของภาพ",
+        "แปลงอินพุตให้ขนาดคงที่ก่อนฝึก",
+        "ลดขนาดภาพเรื่อย ๆ เพื่อสกัดคุณลักษณะเชิงความหมาย",
+        "เพิ่มจำนวนคลาสที่จำแนกได้ต่อพิกเซล"
+      ],
+      "answer": 1,
+      "explanation": "Decoder ขยายขนาด feature map กลับ และกู้รายละเอียดเชิงตำแหน่ง (ข้อ d คือหน้าที่ของ encoder)"
+    },
+    {
+      "id": "q3994",
+      "source": "IMG_3994.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "NMS ทำหน้าที่อะไร",
+      "options": [
+        "เพิ่มจำนวนกรอบให้ครอบคลุม",
+        "แปลงภาพสีเป็นขาวดำ",
+        "คำนวณความสว่างเฉลี่ยของกรอบ",
+        "เก็บกรอบที่มั่นใจสูงสุดไว้และลบกรอบที่ซ้อนทับกันมากทิ้ง",
+        "ปรับขนาดภาพให้เล็กลง"
+      ],
+      "answer": 3,
+      "explanation": "NMS เรียงกรอบตามความมั่นใจ เก็บกรอบที่ดีที่สุด แล้วลบกรอบอื่นที่มี IoU กับกรอบนั้นสูงเกินเกณฑ์"
+    },
+    {
+      "id": "q3995",
+      "source": "IMG_3995.JPG",
+      "module": "m3",
+      "type": "mc",
+      "question": "RPN ใน Faster R-CNN มีบทบาท",
+      "options": [
+        "ตัวชี้วัดประเมินความแม่นยำหลังฝึก",
+        "ชั้นขยายภาพกลับหลัง pooling",
+        "เครือข่ายเล็กที่เสนอบริเวณที่น่าจะมีวัตถุแทนวิธีเดิมที่ช้า",
+        "ฟังก์ชันแปลงภาพเป็นขาวดำ",
+        "ขั้นตอนสุดท้ายที่กำจัดกรอบซ้อนทับ"
+      ],
+      "answer": 2,
+      "explanation": "RPN เป็นเครือข่ายเล็กที่แชร์ feature กับ backbone เพื่อเสนอบริเวณที่น่าจะมีวัตถุ แทน Selective Search ที่ช้าใน R-CNN รุ่นแรก"
+    },
+    {
+      "id": "q4013",
+      "source": "IMG_4013.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "แนวคิดหลักของ N-BEATS (Basis Expansion)",
+      "options": [
+        "ทำนายได้เฉพาะข้อมูลหลายตัวแปร",
+        "ใช้ convolution แทน attention ทั้งหมด",
+        "ใช้ recurrence แทน fully-connected ทั้งหมด",
+        "ให้โครงข่ายทำนายสัมประสิทธิ์ของฟังก์ชันพื้นฐาน แทนการทำนายค่าในอนาคตโดยตรง",
+        "ทำนายค่าทุกจุดในอนาคตแยกกันโดยไม่มีโครงสร้างร่วม"
+      ],
+      "answer": 3,
+      "explanation": "N-BEATS ไม่ทำนายค่าอนาคตตรง ๆ แต่ทำนายสัมประสิทธิ์ของฟังก์ชันพื้นฐาน (basis) แล้วประกอบเป็น backcast/forecast"
+    },
+    {
+      "id": "q4014",
+      "source": "IMG_4014.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ข้อจำกัดของ N-BEATS ตามบทเรียน",
+      "options": [
+        "มีพารามิเตอร์มากกว่า Transformer เสมอ",
+        "ทำนายล่วงหน้าไม่ได้เลย",
+        "ต้องใช้ attention เป็นส่วนหลัก",
+        "ต้นฉบับเป็นแบบ Univariate ไม่รองรับตัวแปรร่วมโดยตรง",
+        "ต้องใช้ recurrence คำนวณ trend และ seasonality เสมอ"
+      ],
+      "answer": 3,
+      "explanation": "N-BEATS ต้นฉบับรับเพียงอนุกรมเวลาเดียว (univariate) ไม่รองรับตัวแปรร่วม (covariates) โดยตรง"
+    },
+    {
+      "id": "q4015",
+      "source": "IMG_4015.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "RMSE ต่างจาก MAE อย่างไร",
+      "options": [
+        "RMSE เท่ากับ MAE เสมอ",
+        "RMSE ใช้ได้เฉพาะงาน NLP",
+        "RMSE ลงโทษค่าคลาดเคลื่อนขนาดใหญ่หนักกว่า MAE",
+        "RMSE วัดเป็นเปอร์เซ็นต์เสมอ",
+        "RMSE เทียบกับโมเดลอื่นไม่ได้"
+      ],
+      "answer": 2,
+      "explanation": "RMSE ยกกำลังสองค่าคลาดเคลื่อนก่อนเฉลี่ย error ที่ใหญ่จึงถูกขยายและลงโทษหนักกว่า MAE ที่ใช้ค่าสัมบูรณ์"
+    },
+    {
+      "id": "q4016",
+      "source": "IMG_4016.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ทำไม Self-Attention ต้องมี Positional Encoding",
+      "options": [
+        "ใช้ได้กับข้อมูลจุดเดียว",
+        "ต้องการลดพารามิเตอร์",
+        "คำนวณ softmax ไม่ได้",
+        "self-attention เป็น permutation-equivariant จึงไม่รู้ลำดับของตำแหน่งข้อมูลโดยธรรมชาติ",
+        "ทำงานแบบขนานไม่ได้"
+      ],
+      "answer": 3,
+      "explanation": "Self-attention เป็น permutation-equivariant สลับลำดับ token แล้วผลก็สลับตาม จึงต้องเติมข้อมูลตำแหน่งด้วย positional encoding"
+    },
+    {
+      "id": "q4017",
+      "source": "IMG_4017.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Bidirectional LSTM เหมาะกับงานลักษณะใด",
+      "options": [
+        "งานที่บริบททั้งก่อนและหลังมีความสำคัญต่อการทำความเข้าใจ",
+        "ต้องการความเร็วสูงสุดอย่างเดียว",
+        "พยากรณ์เรียลไทม์ที่ต้องรู้ผลทันทีจากข้อมูลที่ผ่านมาเท่านั้น",
+        "ไม่มีข้อมูลลำดับเลย",
+        "ต้องการพารามิเตอร์น้อยที่สุด"
+      ],
+      "answer": 0,
+      "explanation": "Bidirectional LSTM อ่านลำดับทั้งไปข้างหน้าและย้อนกลับ เหมาะงานที่ต้องใช้บริบทก่อนและหลัง เช่น NER แต่ไม่เหมาะงานเรียลไทม์ที่ยังไม่มีอนาคต"
+    },
+    {
+      "id": "m4018",
+      "source": "IMG_4018.JPG",
+      "module": "m4",
+      "type": "match",
+      "question": "จับคู่คำศัพท์เกี่ยวกับ RNN (Lesson 4.1) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Vanishing Gradient",
+          "answer": "อาการที่ gradient เล็กลงจนโมเดลจำการพึ่งพาระยะไกลไม่ได้"
+        },
+        {
+          "term": "Many-to-One",
+          "answer": "โครงสร้างที่รับลำดับ input แล้วให้ output เพียงตัวเดียว"
+        },
+        {
+          "term": "Gradient Clipping",
+          "answer": "วิธีจำกัดขนาด gradient เพื่อแก้ปัญหา Exploding Gradient"
+        },
+        {
+          "term": "Hidden State",
+          "answer": "ความจำที่สรุปสิ่งที่โมเดลเห็นมาจนถึงปัจจุบัน"
+        },
+        {
+          "term": "BPTT",
+          "answer": "การแพร่ gradient ย้อนกลับผ่านทุกจุดเวลาที่คลี่ออก"
+        }
+      ]
+    },
+    {
+      "id": "q4019",
+      "source": "IMG_4019.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "แนวคิดหลักของ Attention (Bahdanau 2015)",
+      "options": [
+        "ให้ Decoder ใช้ข้อมูลจากอนาคต",
+        "ให้ Decoder เก็บ hidden state ทั้งหมดไว้แล้วคำนวณค่าเฉลี่ยถ่วงน้ำหนักที่เหมาะกับแต่ละก้าว",
+        "ตัดการเชื่อมต่อ Encoder-Decoder",
+        "Encoder ทำงานครั้งเดียวแล้วไม่ใช้อีก",
+        "Decoder ลืมข้อมูลทั้งหมดก่อนทำนายทุกครั้ง"
+      ],
+      "answer": 1,
+      "explanation": "Bahdanau attention ให้ decoder เข้าถึง hidden state ทุกตัวของ encoder แล้วคำนวณค่าเฉลี่ยถ่วงน้ำหนักใหม่ทุกก้าว แทนการพึ่ง context vector เดียว"
+    },
+    {
+      "id": "q4020",
+      "source": "IMG_4020.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ข้อดีของ GRU เทียบ LSTM",
+      "options": [
+        "จำระยะยาวแข็งแกร่งกว่าเสมอ",
+        "มีประตูมากกว่า",
+        "ใช้ cell state ซับซ้อนกว่า",
+        "ต้องการข้อมูลฝึกมากกว่าหลายเท่า",
+        "มีพารามิเตอร์น้อยกว่าและฝึกได้เร็วกว่า"
+      ],
+      "answer": 4,
+      "explanation": "GRU มี 2 gate และไม่มี cell state แยก จึงมีพารามิเตอร์น้อยกว่าและฝึกเร็วกว่า LSTM ประสิทธิภาพมักใกล้เคียงกัน"
+    },
+    {
+      "id": "q4021",
+      "source": "IMG_4021.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "\"Doubly Residual Stacking\" ของ N-BEATS",
+      "options": [
+        "เพิ่มหัว attention สองเท่า",
+        "ส่งเฉพาะส่วนที่ block ก่อนหน้าอธิบายไม่ได้ไปยัง block ถัดไป แล้วรวมผลพยากรณ์ของทุก block เข้าด้วยกัน",
+        "ฝึกโมเดลสองครั้งด้วยข้อมูลต่างกัน",
+        "ใช้ cell state สองชุดพร้อมกัน",
+        "ซ้อน LSTM สองชั้น"
+      ],
+      "answer": 1,
+      "explanation": "Doubly residual: แต่ละ block ลบส่วนที่อธิบายได้ (backcast) ออกจากอินพุตก่อนส่งต่อ และนำ forecast ของทุก block มารวมกัน"
+    },
+    {
+      "id": "q4022",
+      "source": "IMG_4022.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "เทคโนโลยีที่ต่อจาก Seq2Seq+Attention และเป็นเบื้องหลัง LLM",
+      "options": [
+        "Transformer",
+        "Batch Normalization",
+        "Gradient Clipping",
+        "Sliding Window",
+        "One-Hot Encoding"
+      ],
+      "answer": 0,
+      "explanation": "Transformer (Attention Is All You Need, 2017) ต่อยอดจาก Seq2Seq + Attention และเป็นฐานของ LLM ปัจจุบัน"
+    },
+    {
+      "id": "q4023",
+      "source": "IMG_4023.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "BPTT คืออะไร",
+      "options": [
+        "ลดขนาด hidden state",
+        "สุ่มลำดับข้อมูลใหม่ทุกรอบ",
+        "แปลงภาพเป็นข้อมูลลำดับ",
+        "เพิ่มชั้น RNN",
+        "การแพร่ gradient ย้อนกลับผ่านทุกจุดเวลาที่ RNN คลี่ออก"
+      ],
+      "answer": 4,
+      "explanation": "BPTT คลี่ RNN ออกตามแกนเวลาแล้วแพร่ gradient ย้อนกลับผ่านทุกจุดเวลา"
+    },
+    {
+      "id": "q4025",
+      "source": "IMG_4025.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ทำไมอัปเดต Cell State ของ LSTM ด้วยการ \"บวก\" ช่วยแก้ Vanishing Gradient",
+      "options": [
+        "ลดพารามิเตอร์มาก",
+        "เปิดเส้นทางตรงให้ gradient ไหลย้อนกลับได้โดยแทบไม่ถูกหดเล็กลง",
+        "ไม่ต้องใช้ sigmoid",
+        "ไม่ต้องใช้ backpropagation",
+        "ข้อมูลถูกคูณด้วยค่ามากกว่า 1 เสมอ"
+      ],
+      "answer": 1,
+      "explanation": "cell state อัปเดตแบบบวก c_t = f·c_{t−1} + i·g ทำให้ gradient มีเส้นทางตรงย้อนกลับได้โดยไม่ถูกคูณเมทริกซ์ซ้ำ ๆ จนหดหาย"
+    },
+    {
+      "id": "q4026",
+      "source": "IMG_4026.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Sentiment Analysis ใช้ RNN แบบใด",
+      "options": [
+        "One-to-Many",
+        "One-to-One",
+        "Many-to-Many",
+        "Zero-to-One",
+        "Many-to-One"
+      ],
+      "answer": 4,
+      "explanation": "Sentiment analysis รับประโยคทั้งลำดับ แล้วให้ผลลัพธ์เดียว (บวก/ลบ) จึงเป็น many-to-one"
+    },
+    {
+      "id": "q4027",
+      "source": "IMG_4027.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "GRU ต่างจาก LSTM เชิงโครงสร้าง",
+      "options": [
+        "GRU มี 3 ประตูแต่ไม่มี hidden state",
+        "มีประตูมากกว่า 2 เท่า",
+        "GRU มีเพียง 2 ประตูและไม่มี cell state แยกออกจาก hidden state",
+        "ไม่มีประตูเลย",
+        "ใช้ cell state 2 ชุด"
+      ],
+      "answer": 2,
+      "explanation": "GRU มี update gate กับ reset gate เพียง 2 ตัว และรวม cell state ไว้ใน hidden state"
+    },
+    {
+      "id": "q4028",
+      "source": "IMG_4028.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ข้อสมมุติร่วมของ MLP และ CNN ที่ไม่เหมาะกับข้อมูลลำดับ",
+      "options": [
+        "ใช้ tanh ไม่ได้",
+        "ต้องมี Dropout ทุกโมเดล",
+        "ต้องใช้ GPU มาก",
+        "รองรับเฉพาะภาพสี",
+        "ประมวลผลแต่ละ input อย่างอิสระ ไม่มีความจำของสิ่งที่เห็นก่อนหน้า"
+      ],
+      "answer": 4,
+      "explanation": "MLP และ CNN มองแต่ละอินพุตเป็นอิสระต่อกัน ไม่มีความจำของสิ่งที่เห็นก่อนหน้า จึงจับความสัมพันธ์เชิงลำดับไม่ได้"
+    },
+    {
+      "id": "q4030",
+      "source": "IMG_4030.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "หน้าที่ของ Residual Connection ใน Transformer",
+      "options": [
+        "ลดจำนวนชั้นให้น้อยที่สุด ทำให้ gradient คำนวณเร็วขึ้น",
+        "เปิดทางด่วนให้ gradient ไหลย้อนกลับได้ง่ายขึ้น เช่นเดียวกับหลักการใน ResNet และ cell state ของ LSTM",
+        "ใช้แทน Positional Encoding",
+        "แปลงข้อมูลภาพเป็นข้อมูลลำดับ",
+        "แทนฟังก์ชัน softmax ทั้งหมด"
+      ],
+      "answer": 1,
+      "explanation": "Residual connection (x + Sublayer(x)) เป็นทางด่วนให้ gradient ไหลย้อนผ่านชั้นลึกได้ หลักการเดียวกับ ResNet และ cell state ของ LSTM"
+    },
+    {
+      "id": "q4031",
+      "source": "IMG_4031.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Cell State ของ LSTM เมื่อเทียบกับอุปมา \"สายพานลำเลียง\"",
+      "options": [
+        "ช่องทางที่ความจำระยะยาวไหลผ่านไปได้โดยแทบไม่ถูกรบกวน",
+        "จุดที่ข้อมูลทั้งหมดถูกลบล้างใหม่ทุกจุดเวลา",
+        "ตัวแปรเก็บ learning rate",
+        "ค่าคงที่ไม่เปลี่ยนตลอดการฝึก",
+        "ชั้นลดขนาดภาพ"
+      ],
+      "answer": 0,
+      "explanation": "cell state เปรียบเหมือนสายพานลำเลียงที่วิ่งผ่านทุกจุดเวลา ข้อมูลระยะยาวจึงไหลไปได้โดยถูกแก้ไขน้อยมากผ่าน gate"
+    },
+    {
+      "id": "q4033",
+      "source": "IMG_4033.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Self-Attention ต่างจาก Attention เดิมใน Seq2Seq",
+      "options": [
+        "Query มาจาก Decoder เท่านั้นเหมือนเดิม",
+        "Query, Key และ Value มาจากลำดับเดียวกัน ทำให้ลำดับ \"คุยกับตัวเอง\"",
+        "ใช้ได้เฉพาะภาพ",
+        "ไม่ต้องคำนวณ score ระหว่างตำแหน่ง",
+        "ไม่ใช้ softmax เลย"
+      ],
+      "answer": 1,
+      "explanation": "Self-attention ให้ Q, K, V มาจากลำดับเดียวกัน ทุกตำแหน่งจึงดูทุกตำแหน่งในลำดับตัวเอง ต่างจาก attention เดิมที่ Q มาจาก decoder และ K, V มาจาก encoder"
+    },
+    {
+      "id": "q4034",
+      "source": "IMG_4034.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Masked Self-Attention ใน Decoder ของ Transformer มีไว้เพื่ออะไร",
+      "options": [
+        "เพิ่มความเร็ว Encoder",
+        "แทน softmax",
+        "ไม่ต้องใช้ Positional Encoding",
+        "ลดพารามิเตอร์ Decoder",
+        "ป้องกันไม่ให้โมเดลมองเห็นข้อมูลในอนาคตขณะฝึก"
+      ],
+      "answer": 4,
+      "explanation": "Masked self-attention ปิดตำแหน่งในอนาคต เพื่อให้ decoder ทำนาย token ถัดไปจากอดีตเท่านั้น เหมือนตอนใช้งานจริง"
+    },
+    {
+      "id": "q4035",
+      "source": "IMG_4035.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "\"Query\" ใน Attention หมายถึง",
+      "options": [
+        "ป้ายหัวเรื่องที่บอกว่าข้อมูลเกี่ยวกับอะไร",
+        "สถานะที่บอกว่าตอนนี้โมเดลกำลังหาข้อมูลอะไร",
+        "ผลลัพธ์สุดท้ายของการทำนาย",
+        "เนื้อหาจริงที่จะถูกส่งต่อไปใช้งาน",
+        "ค่าคงที่ก่อนฝึก"
+      ],
+      "answer": 1,
+      "explanation": "Query คือสิ่งที่ตำแหน่งปัจจุบันกำลังค้นหา Key คือป้ายบอกว่าข้อมูลเกี่ยวกับอะไร Value คือเนื้อหาที่ส่งต่อ"
+    },
+    {
+      "id": "q4036",
+      "source": "IMG_4036.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "วิธีแก้ Exploding Gradient",
+      "options": [
+        "ลดจำนวน epoch",
+        "เพิ่มข้อมูลสิบเท่า",
+        "Gradient Clipping (จำกัดขนาดของ gradient ไม่ให้เกินเพดาน)",
+        "เพิ่ม batch size",
+        "เปลี่ยน loss เป็น MSE เสมอ"
+      ],
+      "answer": 2,
+      "explanation": "Gradient clipping จำกัดขนาด (norm) ของ gradient ไม่ให้เกินเพดาน กันไม่ให้น้ำหนักกระโดดจนเป็น NaN"
+    },
+    {
+      "id": "q4037",
+      "source": "IMG_4037.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "\"Hidden State\" ใน RNN ทำหน้าที่อะไร",
+      "options": [
+        "ตัวกรองตัดข้อมูลซ้ำ",
+        "ความจำที่สรุปสิ่งที่โมเดลเห็นมาทั้งหมดจนถึงปัจจุบัน",
+        "ชั้น Dropout",
+        "พารามิเตอร์ปรับขนาดภาพ",
+        "ค่าคงที่ไม่เปลี่ยน"
+      ],
+      "answer": 1,
+      "explanation": "Hidden state เป็นความจำที่สรุปสิ่งที่ RNN เห็นมาตั้งแต่ต้นลำดับจนถึงเวลาปัจจุบัน และส่งต่อไปยังก้าวถัดไป"
+    },
+    {
+      "id": "q4039",
+      "source": "IMG_4039.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Generic Basis vs Interpretable Basis ของ N-BEATS",
+      "options": [
+        "Generic เรียนรู้ฐานจากข้อมูลเอง ส่วน Interpretable กำหนดฐานไว้ล่วงหน้าให้มีความหมายทางสถิติ เช่น trend และ seasonality",
+        "Generic ใช้เฉพาะข้อความและเสียง ส่วน Interpretable ใช้เฉพาะงานทำนายข้อความยาว",
+        "Generic ไม่มีพารามิเตอร์เลย ส่วน Interpretable มีมากกว่าหลายเท่า",
+        "Generic ใช้กับข้อมูลสั้น Interpretable ใช้กับข้อมูลยาวเท่านั้น",
+        "Generic ใช้ recurrence ส่วน Interpretable ใช้ self-attention"
+      ],
+      "answer": 0,
+      "explanation": "Generic basis ให้โครงข่ายเรียนรู้ฐานเองจากข้อมูล ส่วน interpretable basis บังคับฐานเป็น trend (พหุนาม) และ seasonality (ฟูริเยร์) ที่ตีความได้"
+    },
+    {
+      "id": "q4040",
+      "source": "IMG_4040.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ทำไม Transformer ใช้ Layer Norm แทน Batch Norm",
+      "options": [
+        "BN ใช้กับ GPU ไม่ได้",
+        "LN เร็วกว่าเสมอทุกกรณี",
+        "BN ใช้ได้เฉพาะภาพ",
+        "เพราะความยาวลำดับไม่คงที่และขนาด batch อาจเล็ก",
+        "LN ไม่ต้องใช้พารามิเตอร์"
+      ],
+      "answer": 3,
+      "explanation": "Batch norm ต้องอาศัยสถิติข้าม batch ซึ่งไม่เสถียรเมื่อความยาวลำดับไม่เท่ากันและ batch เล็ก Layer norm คำนวณภายในตัวอย่างเดียว"
+    },
+    {
+      "id": "q4041",
+      "source": "IMG_4041.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "Forget Gate ใน LSTM หน้าที่หลัก",
+      "options": [
+        "เปลี่ยน learning rate",
+        "หยุดการฝึกเมื่อไร",
+        "เพิ่ม batch size",
+        "เพิ่มชั้นใหม่",
+        "ตัดสินว่าข้อมูลเก่าใน cell state ตัวไหนควรเก็บไว้หรือลืมทิ้ง"
+      ],
+      "answer": 4,
+      "explanation": "Forget gate ให้ค่า 0 ถึง 1 กับแต่ละส่วนของ cell state เพื่อตัดสินว่าจะเก็บหรือลืมข้อมูลเก่า"
+    },
+    {
+      "id": "q4042",
+      "source": "IMG_4042.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "\"Weight Sharing\" ของ RNN เหมือน Parameter Sharing ของ CNN แต่ต่างกันอย่างไร",
+      "options": [
+        "RNN แชร์น้ำหนักกับ batch size ส่วน CNN แชร์กับจำนวน epoch",
+        "RNN แชร์น้ำหนักข้ามแกนเวลา ส่วน CNN แชร์น้ำหนักข้ามตำแหน่งในภาพ",
+        "แชร์รูปแบบเดียวกันทุกประการ",
+        "RNN แชร์เฉพาะชั้นสุดท้าย ส่วน CNN แชร์ทุกชั้น",
+        "RNN ไม่มีการแชร์น้ำหนักเลย"
+      ],
+      "answer": 1,
+      "explanation": "ทั้งสองใช้น้ำหนักชุดเดียวซ้ำ RNN ใช้ซ้ำทุกจุดเวลา ส่วน CNN ใช้เคอร์เนลเดียวซ้ำทุกตำแหน่งในภาพ"
+    },
+    {
+      "id": "q4043",
+      "source": "IMG_4043.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "sliding window ในงานพยากรณ์อนุกรมเวลาใช้ทำอะไร",
+      "options": [
+        "เพิ่มความละเอียดภาพ",
+        "ลบข้อมูลซ้ำ",
+        "ลดจำนวนจุดข้อมูล",
+        "แปลงข้อความเป็นตัวเลข",
+        "แปลงอนุกรมเวลาให้อยู่ในรูปคู่ (input, output) สำหรับ supervised learning"
+      ],
+      "answer": 4,
+      "explanation": "Sliding window ตัดอนุกรมเวลาเป็นหน้าต่าง เช่น 30 จุดย้อนหลังเป็น input และจุดถัดไปเป็น output เพื่อฝึกแบบ supervised"
+    },
+    {
+      "id": "q4044",
+      "source": "IMG_4044.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ข้อใด \"ไม่ใช่\" ลักษณะที่ท้าทายของ sequence data",
+      "options": [
+        "ลำดับมีความสำคัญต่อความหมาย",
+        "ความยาวลำดับไม่คงที่",
+        "อาจมีการพึ่งพาระยะไกล",
+        "ทุกจุดข้อมูลมีขนาดไฟล์คงที่เท่ากันเสมอ",
+        "แต่ละจุดสัมพันธ์กับจุดก่อนหน้า"
+      ],
+      "answer": 3,
+      "explanation": "ขนาดไฟล์คงที่ไม่ใช่ความท้าทายของข้อมูลลำดับ ความท้าทายจริงคือลำดับมีความหมาย ความยาวไม่คงที่ และมีการพึ่งพาระยะไกล"
+    },
+    {
+      "id": "q4045",
+      "source": "IMG_4045.JPG",
+      "module": "m4",
+      "type": "mc",
+      "question": "ผลกระทบของ Vanishing Gradient ต่อ RNN ธรรมดา",
+      "options": [
+        "พารามิเตอร์ลดลงอัตโนมัติ",
+        "ฝึกเร็วขึ้น",
+        "น้ำหนักพุ่งเป็น NaN ทันที",
+        "จำข้อมูลช่วงต้นได้ดีขึ้น",
+        "เรียนรู้การพึ่งพาระยะไกลไม่ได้ เหมือนลืมข้อมูลช่วงต้นของลำดับ"
+      ],
+      "answer": 4,
+      "explanation": "gradient หดเล็กลงทุกครั้งที่ย้อนผ่านเวลา ข้อมูลต้นลำดับจึงแทบไม่มีผลต่อการเรียนรู้ เหมือนโมเดลลืมช่วงต้น"
+    },
+    {
+      "id": "m4046",
+      "source": "IMG_4046.JPG",
+      "module": "m4",
+      "type": "match",
+      "question": "จับคู่คำศัพท์เกี่ยวกับ LSTM/GRU (Lesson 4.2) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Forget Gate",
+          "answer": "ตัดสินว่าข้อมูลเก่าใน cell state ตัวไหนควรลืมทิ้ง"
+        },
+        {
+          "term": "GRU",
+          "answer": "สถาปัตยกรรมที่มีเพียง 2 ประตูและไม่มี cell state แยกจาก hidden state"
+        },
+        {
+          "term": "Input Gate",
+          "answer": "ตัดสินว่าข้อมูลใหม่ตัวไหนควรบันทึกลง cell state"
+        },
+        {
+          "term": "Cell State",
+          "answer": "ช่องทางความจำระยะยาวที่ไหลผ่านไปได้โดยแทบไม่ถูกรบกวน"
+        },
+        {
+          "term": "Output Gate",
+          "answer": "ตัดสินว่าส่วนใดของ cell state จะถูกส่งออกเป็น hidden state"
+        }
+      ]
+    },
+    {
+      "id": "q4056",
+      "source": "IMG_4056.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "วิธีจัดการ Outlier ของข้อมูลลำดับในเนื้อหา",
+      "options": [
+        "ลบคอลัมน์ที่มีค่าผิดปกติทั้งหมด",
+        "ปรับ learning rate สูงขึ้น",
+        "เพิ่ม Dropout",
+        "แปลงเป็น One-Hot",
+        "ตรวจด้วย IQR หรือ Z-score แล้วตัด/แก้"
+      ],
+      "answer": 4,
+      "explanation": "ค่าผิดปกติตรวจได้ด้วย IQR (นอกช่วง Q1−1.5·IQR ถึง Q3+1.5·IQR) หรือ Z-score (|z| > 3) แล้วตัดทิ้งหรือแก้ไข เช่น clip หรือ interpolate"
+    },
+    {
+      "id": "q4057",
+      "source": "IMG_4057.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "AdamW ต่างจาก Adam อย่างไร",
+      "options": [
+        "ใช้ learning rate คงที่",
+        "ใช้ร่วมกับ regularization ไม่ได้",
+        "แยกการทำ weight decay ออกจาก gradient",
+        "ไม่ใช้ momentum",
+        "ใช้ข้อมูลทั้งชุดต่อการอัปเดต"
+      ],
+      "answer": 2,
+      "explanation": "AdamW แยก weight decay ออกจากการคำนวณ gradient (decoupled) ทำให้ regularization ทำงานถูกต้องกว่าการใส่ L2 ใน Adam ปกติ"
+    },
+    {
+      "id": "q4058",
+      "source": "IMG_4058.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Mosaic Augmentation ของ YOLO",
+      "options": [
+        "แปลภาษาไปกลับ",
+        "ลบบางส่วนของภาพเป็นสี่เหลี่ยม",
+        "รวม 4 ภาพเป็นภาพเดียวในการฝึกแต่ละครั้ง",
+        "ผสมสองภาพและ label เชิงเส้น",
+        "เติมสัญญาณรบกวน"
+      ],
+      "answer": 2,
+      "explanation": "Mosaic นำ 4 ภาพมาย่อและต่อกันเป็นภาพเดียว โมเดลได้เห็นวัตถุหลายขนาดหลายบริบทในรอบเดียว"
+    },
+    {
+      "id": "q4059",
+      "source": "IMG_4059.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ข้อพิจารณา 5 ด้านในการเก็บข้อมูล ไม่รวมข้อใด",
+      "options": [
+        "คุณภาพ (Quality)",
+        "ปริมาณ (Quantity)",
+        "ความหลากหลาย (Diversity)",
+        "ความสวยงามของภาพ (Aesthetic)",
+        "ความสมดุล (Balance)"
+      ],
+      "answer": 3,
+      "explanation": "ห้าด้านคือ คุณภาพ ปริมาณ ความหลากหลาย ความสมดุล และกฎหมาย/จริยธรรม ความสวยงามของภาพไม่ใช่เกณฑ์"
+    },
+    {
+      "id": "q4060",
+      "source": "IMG_4060.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Early Stopping \"patience\"",
+      "options": [
+        "กำหนดจำนวนชั้น",
+        "กำหนดจำนวน epoch ที่รอก่อนหยุดฝึกเมื่อไม่ดีขึ้น",
+        "batch size",
+        "จำนวนนิวรอนที่ปิด",
+        "learning rate เริ่มต้น"
+      ],
+      "answer": 1,
+      "explanation": "patience คือจำนวน epoch ที่ยอมรอเมื่อค่าที่เฝ้าดู (เช่น val loss) ไม่ดีขึ้น ก่อนสั่งหยุดฝึก"
+    },
+    {
+      "id": "m4061",
+      "source": "IMG_4061.JPG",
+      "module": "m5",
+      "type": "match",
+      "question": "จับคู่คำศัพท์ของ Lesson 5.2 กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Data Augmentation",
+          "answer": "สร้างข้อมูลใหม่จากข้อมูลเดิมด้วยการแปลงเล็กน้อย"
+        },
+        {
+          "term": "Min-Max Normalization",
+          "answer": "ปรับค่าให้อยู่ในช่วง 0 ถึง 1 โดยใช้ค่าต่ำสุดและสูงสุด"
+        },
+        {
+          "term": "Standardization",
+          "answer": "ปรับค่าให้มีค่าเฉลี่ยเป็น 0 และส่วนเบี่ยงเบนมาตรฐานเป็น 1"
+        },
+        {
+          "term": "Data Cleaning",
+          "answer": "ขั้นตอนขจัดข้อมูลที่ผิดพลาดหรือรบกวนออกก่อนฝึก"
+        },
+        {
+          "term": "Mosaic",
+          "answer": "เทคนิค augmentation ของ YOLO ที่รวม 4 ภาพเป็นภาพเดียว"
+        },
+        {
+          "term": "Data Leakage",
+          "answer": "ข้อผิดพลาดจากการ fit scaler/tokenizer รวมกับชุด test"
+        }
+      ]
+    },
+    {
+      "id": "q4062",
+      "source": "IMG_4062.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Adam รวมแนวคิดใดสองอย่าง",
+      "options": [
+        "L1 และ L2 Regularization",
+        "Dropout และ Regularization",
+        "Momentum และ Adaptive Learning Rate",
+        "Early Stopping และ Data Augmentation",
+        "Batch Normalization และ Weight Decay"
+      ],
+      "answer": 2,
+      "explanation": "Adam = Momentum (ค่าเฉลี่ยเคลื่อนที่ของ gradient) + Adaptive learning rate แบบ RMSProp (ค่าเฉลี่ยของ gradient ยกกำลังสอง)"
+    },
+    {
+      "id": "q4063",
+      "source": "IMG_4063.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Overfitting ตามคำเปรียบเทียบในเนื้อหาเหมือนพฤติกรรมใด",
+      "options": [
+        "อ่านหนังสือทุกวิชาเท่ากัน",
+        "ลอกคำตอบเพื่อน",
+        "ไม่เคยอ่านหนังสือก่อนสอบ",
+        "เข้าใจหลักการจนทำข้อสอบใหม่ได้",
+        "นักเรียนที่ท่องจำเฉลยข้อสอบเก่า"
+      ],
+      "answer": 4,
+      "explanation": "Overfitting เหมือนนักเรียนท่องเฉลยข้อสอบเก่า เจอข้อเดิมได้เต็ม แต่เจอข้อใหม่ทำไม่ได้"
+    },
+    {
+      "id": "q4064",
+      "source": "IMG_4064.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Underfitting มีอาการอย่างไร",
+      "options": [
+        "test ดีมากแต่ train แย่",
+        "ดีขึ้นเรื่อยๆ ไม่มีข้อเสีย",
+        "train และ test ดีทั้งคู่",
+        "train ดีมากแต่ test แย่",
+        "ผลลัพธ์กับชุด train และชุด test แย่ทั้งคู่"
+      ],
+      "answer": 4,
+      "explanation": "Underfitting คือโมเดลง่ายเกินไป แม้ข้อมูลฝึกก็ทำได้ไม่ดี ผลจึงแย่ทั้ง train และ test"
+    },
+    {
+      "id": "q4065",
+      "source": "IMG_4065.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "แนวปฏิบัติที่ดี ควรเริ่มเลือก Optimizer ตัวใดก่อน",
+      "options": [
+        "SGD ธรรมดาไม่มี momentum",
+        "AdamW กับ learning rate 1e-3",
+        "Batch GD กับ learning rate 0.5",
+        "RMSProp กับ learning rate 1.0",
+        "AdaGrad กับ learning rate 10"
+      ],
+      "answer": 1,
+      "explanation": "ค่าเริ่มต้นที่แนะนำคือ AdamW กับ learning rate 1e-3 เพราะทนทานและใช้ได้ดีกับงานส่วนใหญ่"
+    },
+    {
+      "id": "q4066",
+      "source": "IMG_4066.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Dropout ทำงานอย่างไรขณะฝึก",
+      "options": [
+        "ลบข้อมูลซ้ำ",
+        "เพิ่มชั้น Convolution",
+        "ลดจำนวน epoch",
+        "เพิ่ม learning rate ทุกรอบ",
+        "สุ่มปิดนิวรอนด้วยความน่าจะเป็น p"
+      ],
+      "answer": 4,
+      "explanation": "Dropout สุ่มปิดนิวรอนด้วยความน่าจะเป็น p ทุกรอบที่ฝึก บังคับให้โมเดลไม่พึ่งนิวรอนตัวใดตัวหนึ่งมากเกินไป"
+    },
+    {
+      "id": "q4067",
+      "source": "IMG_4067.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ข้อควรระวังด้านกฎหมาย/จริยธรรมของ Image Crawling",
+      "options": [
+        "แปลงภาพเป็น 224x224",
+        "ลบ EXIF ทุกครั้ง",
+        "ต้องตรวจลิขสิทธิ์และ license ของภาพก่อนใช้งาน",
+        "แปลงเป็น grayscale",
+        "เก็บภาพจากกล้องเท่านั้น"
+      ],
+      "answer": 2,
+      "explanation": "ภาพบนเว็บมีเจ้าของ ต้องตรวจลิขสิทธิ์และ license ก่อนนำมาใช้ฝึกหรือเผยแพร่"
+    },
+    {
+      "id": "q4068",
+      "source": "IMG_4068.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "เวลาในโปรเจกต์ ML จริงส่วนใหญ่หมดไปกับขั้นตอนใด",
+      "options": [
+        "สร้างสถาปัตยกรรมโมเดล",
+        "deploy",
+        "การเตรียมข้อมูล (Data Preprocessing)",
+        "เขียนรายงาน",
+        "ปรับ hyperparameter"
+      ],
+      "answer": 2,
+      "explanation": "งาน ML จริงใช้เวลาส่วนใหญ่ (มักกล่าวว่าราว 60–80%) ไปกับการเก็บและเตรียมข้อมูล"
+    },
+    {
+      "id": "q4069",
+      "source": "IMG_4069.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "\"Garbage In, Garbage Out\" สื่อถึงอะไร",
+      "options": [
+        "จำนวนข้อมูลสำคัญกว่าคุณภาพโมเดล",
+        "คุณภาพข้อมูลสำคัญกว่าความซับซ้อนของโมเดล",
+        "ความซับซ้อนโมเดลสำคัญกว่าคุณภาพข้อมูล",
+        "เก็บข้อมูลเองดีกว่าชุดสาธารณะเสมอ",
+        "สถาปัตยกรรมตัดสินผลเสมอ"
+      ],
+      "answer": 1,
+      "explanation": "Garbage in, garbage out: ข้อมูลแย่ โมเดลดีแค่ไหนก็ให้ผลแย่ คุณภาพข้อมูลจึงสำคัญกว่าความซับซ้อนของโมเดล"
+    },
+    {
+      "id": "q4070",
+      "source": "IMG_4070.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "L2 Regularization มีผลต่อน้ำหนักอย่างไร",
+      "options": [
+        "เพิ่มขึ้นเรื่อยๆ",
+        "บางตัวเป็นศูนย์พอดี",
+        "ไม่มีผล",
+        "ทำให้น้ำหนักเล็กลงแต่ไม่ถึงศูนย์",
+        "ทุกตัวเท่ากัน"
+      ],
+      "answer": 3,
+      "explanation": "L2 ลงโทษผลรวมกำลังสองของน้ำหนัก ดึงทุกตัวให้เล็กลงแต่ไม่ถึงศูนย์พอดี (ต่างจาก L1)"
+    },
+    {
+      "id": "q4071",
+      "source": "IMG_4071.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Cosine Annealing ปรับ LR อย่างไร",
+      "options": [
+        "เพิ่ม LR เรื่อยๆ",
+        "ลดเป็นศูนย์ทันทีหลัง epoch แรก",
+        "คงค่าเดียว",
+        "ลด LR ตามเส้นโค้งโคไซน์อย่างเรียบลื่น",
+        "ลด LR เป็นขั้นๆ ทุก N epoch"
+      ],
+      "answer": 3,
+      "explanation": "Cosine annealing ลด LR จากค่าสูงลงตามเส้นโค้งโคไซน์อย่างนุ่มนวล (ข้อ e คือ step decay)"
+    },
+    {
+      "id": "q4072",
+      "source": "IMG_4072.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ตามกฎเหล็กของ Augmentation ควรทำ Augmentation กับข้อมูลชุดใด",
+      "options": [
+        "ชุด train เท่านั้น",
+        "ชุด validation เท่านั้น",
+        "ทั้ง train และ test",
+        "ทั้ง train, validation และ test",
+        "ชุด test เท่านั้น"
+      ],
+      "answer": 0,
+      "explanation": "Augmentation ทำกับชุด train เท่านั้น validation และ test ต้องเป็นข้อมูลจริงที่ไม่ถูกดัดแปลง เพื่อให้วัดผลได้ตรง"
+    },
+    {
+      "id": "q4073",
+      "source": "IMG_4073.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ตรวจภาพเบลอด้วย variance ของ Laplacian ใช้หลักการใด",
+      "options": [
+        "ค่า variance ต่ำบ่งบอกว่าภาพเบลอ",
+        "variance สูงบ่งบอกว่าไฟล์ภาพเสีย",
+        "variance ต่ำบ่งบอกว่าภาพมีสีสันมาก",
+        "variance สูงบ่งบอกว่าภาพเบลอ",
+        "variance ไม่เกี่ยวกับความเบลอ"
+      ],
+      "answer": 0,
+      "explanation": "Laplacian ตอบสนองต่อขอบคม ภาพเบลอมีขอบน้อยจึงได้ variance ของ Laplacian ต่ำ"
+    },
+    {
+      "id": "q4074",
+      "source": "IMG_4074.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "\"Domain Shift\" ในบริบทการเก็บข้อมูล",
+      "options": [
+        "โมเดลทำงานแย่ลงเมื่อสภาพข้อมูลจริงต่างจากข้อมูลฝึก",
+        "เรียนรู้เร็วขึ้นเมื่อเปลี่ยนโดเมน",
+        "ภาพเปลี่ยนเป็นข้อมูลลำดับอัตโนมัติ",
+        "การเปลี่ยนตำแหน่งกล้องระหว่างฝึก",
+        "ฝึกด้วยข้อมูลน้อยแม่นกว่าเสมอ"
+      ],
+      "answer": 0,
+      "explanation": "Domain shift คือเมื่อข้อมูลจริงต่างจากข้อมูลฝึก (แสง มุมกล้อง สถานที่) ทำให้โมเดลทำงานแย่ลง"
+    },
+    {
+      "id": "m4075",
+      "source": "IMG_4075.JPG",
+      "module": "m5",
+      "type": "match",
+      "question": "จับคู่คำศัพท์ของ Lesson 5.3 กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "L1 Regularization",
+          "answer": "ลงโทษค่าสัมบูรณ์ของน้ำหนักจนบางตัวเป็นศูนย์"
+        },
+        {
+          "term": "Underfitting",
+          "answer": "โมเดลง่ายเกินไปจนเรียนรู้แม้แต่ข้อมูลฝึกได้ไม่ดี"
+        },
+        {
+          "term": "Dropout",
+          "answer": "สุ่มปิดนิวรอนขณะฝึกด้วยความน่าจะเป็น p"
+        },
+        {
+          "term": "L2 Regularization",
+          "answer": "ลงโทษผลรวมของน้ำหนักยกกำลังสองเพื่อให้น้ำหนักเล็กลง"
+        },
+        {
+          "term": "Early Stopping",
+          "answer": "หยุดฝึกเมื่อ validation loss ไม่ดีขึ้นอีกต่อไป"
+        },
+        {
+          "term": "Overfitting",
+          "answer": "โมเดลจำข้อมูลฝึกได้ดีเกินไปจนทำงานแย่กับข้อมูลใหม่"
+        }
+      ]
+    },
+    {
+      "id": "q4076",
+      "source": "IMG_4076.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ชุดข้อมูลสาธารณะมาตรฐาน detection/segmentation 80 คลาส",
+      "options": [
+        "COCO Dataset",
+        "HuggingFace Datasets",
+        "Roboflow Universe",
+        "Kaggle",
+        "Google Open Images"
+      ],
+      "answer": 0,
+      "explanation": "COCO มี 80 คลาสวัตถุ เป็นมาตรฐานกลางสำหรับเทียบผลงาน detection และ segmentation"
+    },
+    {
+      "id": "q4077",
+      "source": "IMG_4077.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Data Leakage ที่พบบ่อยในขั้น Normalization เกิดจาก",
+      "options": [
+        "ใช้ Min-Max แทน Standardization",
+        "ไม่ resize ภาพ",
+        "ไม่แปลง BGR เป็น RGB",
+        "fit scaler หรือ tokenizer รวมกับชุด test",
+        "batch size เล็กเกินไป"
+      ],
+      "answer": 3,
+      "explanation": "ถ้า fit scaler หรือ tokenizer กับข้อมูลที่รวมชุด test สถิติของ test จะรั่วเข้าไปในโมเดล ผลประเมินจึงดีเกินจริง ต้อง fit กับ train เท่านั้น"
+    },
+    {
+      "id": "q4078",
+      "source": "IMG_4078.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ทำไมนิยมให้ LR ก้าวใหญ่ตอนต้นแล้วเล็กลง",
+      "options": [
+        "ป้องกัน data leakage",
+        "ใช้หน่วยความจำน้อยลง",
+        "เพื่อไม่ให้ก้าวข้ามจุดต่ำสุดเมื่อใกล้ถึงเป้าหมาย",
+        "โมเดลเล็กลง",
+        "epoch ลดลงเสมอ"
+      ],
+      "answer": 2,
+      "explanation": "ช่วงแรกก้าวใหญ่เพื่อไปใกล้จุดต่ำสุดเร็ว ช่วงท้ายก้าวเล็กลงเพื่อไม่ให้กระโดดข้ามจุดต่ำสุดไปมา"
+    },
+    {
+      "id": "q4080",
+      "source": "IMG_4080.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "เครื่องมือดึงคลังข้อความสำเร็จรูปสำหรับ NLP เช่น IMDB",
+      "options": [
+        "paho-mqtt",
+        "HuggingFace Datasets",
+        "Pandas",
+        "Roboflow",
+        "OpenCV"
+      ],
+      "answer": 1,
+      "explanation": "HuggingFace Datasets มีชุดข้อมูล NLP สำเร็จรูปจำนวนมาก โหลดได้ด้วย load_dataset(\"imdb\")"
+    },
+    {
+      "id": "m4082",
+      "source": "IMG_4082.JPG",
+      "module": "m5",
+      "type": "match",
+      "question": "จับคู่แหล่งข้อมูล/เครื่องมือของ Lesson 5.1 กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "FFmpeg",
+          "answer": "เครื่องมือแยกเฟรม/แปลงวิดีโอแบบรวดเร็วด้วยคำสั่งบรรทัดเดียว"
+        },
+        {
+          "term": "Kaggle",
+          "answer": "แหล่งชุดข้อมูลสาธารณะหลากหลายพร้อม notebook ตัวอย่าง"
+        },
+        {
+          "term": "Roboflow Universe",
+          "answer": "ชุดข้อมูลที่ติดป้ายกำกับแล้วสำหรับงาน object detection"
+        },
+        {
+          "term": "COCO Dataset",
+          "answer": "ชุดข้อมูลมาตรฐานสำหรับ detection/segmentation 80 คลาส"
+        },
+        {
+          "term": "HuggingFace Datasets",
+          "answer": "คลังข้อความ/ชุดข้อมูลสำเร็จรูปสำหรับ NLP"
+        },
+        {
+          "term": "MQTT",
+          "answer": "โพรโทคอลรับข้อมูลสดจากเซนเซอร์ IoT"
+        }
+      ]
+    },
+    {
+      "id": "q4084",
+      "source": "IMG_4084.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "เครื่องมือแยกเฟรมจากวิดีโอด้วยคำสั่งบรรทัดเดียว",
+      "options": [
+        "Pandas",
+        "OpenCV",
+        "paho-mqtt",
+        "FFmpeg",
+        "Roboflow"
+      ],
+      "answer": 3,
+      "explanation": "FFmpeg แยกเฟรมจากวิดีโอได้ในคำสั่งเดียว เช่น ffmpeg -i v.mp4 -vf fps=1 out_%04d.jpg"
+    },
+    {
+      "id": "q4085",
+      "source": "IMG_4085.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Data Preprocessing 3 เสาหลัก",
+      "options": [
+        "Normalization, Segmentation, Detection",
+        "Augmentation, Classification, Regression",
+        "Cleaning, Normalization, Augmentation",
+        "Cleaning, Tokenization, Deployment",
+        "Cleaning, Labeling, Deployment"
+      ],
+      "answer": 2,
+      "explanation": "Preprocessing ในบทนี้มี 3 เสาหลักคือ Cleaning, Normalization และ Augmentation"
+    },
+    {
+      "id": "q4086",
+      "source": "IMG_4086.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "ข้อเสียเด่นของ Batch Gradient Descent",
+      "options": [
+        "ต้องใช้ GPU เท่านั้น",
+        "แม่นยำน้อยกว่าเสมอ",
+        "ทิศทางอัปเดตแกว่งรุนแรง",
+        "ใช้กับ Momentum ไม่ได้",
+        "ช้ามากและใช้หน่วยความจำสูง"
+      ],
+      "answer": 4,
+      "explanation": "Batch GD ใช้ข้อมูลทั้งชุดต่อการอัปเดตหนึ่งครั้ง จึงช้ามากและกินหน่วยความจำสูง (การแกว่งรุนแรงเป็นจุดอ่อนของ SGD)"
+    },
+    {
+      "id": "q4087",
+      "source": "IMG_4087.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Sequence Dataset จากเซนเซอร์ IoT แบบสดมักเก็บผ่านโพรโทคอลใด",
+      "options": [
+        "HTTP REST API",
+        "SMTP",
+        "FTP",
+        "SQL",
+        "MQTT"
+      ],
+      "answer": 4,
+      "explanation": "MQTT เป็นโพรโทคอล publish/subscribe ที่เบา นิยมใช้รับข้อมูลสดจากเซนเซอร์ IoT"
+    },
+    {
+      "id": "q4088",
+      "source": "IMG_4088.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "สัญญาณ Overfitting จากกราฟ training/validation",
+      "options": [
+        "Train loss เพิ่มแต่ Val loss ลดตลอด",
+        "ลดพร้อมกันตลอด",
+        "คงที่ตั้งแต่ epoch แรก",
+        "Training loss ลดลงต่อเนื่องแต่ Validation loss เริ่มเพิ่มขึ้น",
+        "Train loss สูงกว่า Val loss เสมอ"
+      ],
+      "answer": 3,
+      "explanation": "Overfitting เห็นได้เมื่อ training loss ยังลดต่อ แต่ validation loss เริ่มกลับขึ้น"
+    },
+    {
+      "id": "q4089",
+      "source": "IMG_4089.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Augmentation ข้อความโดยแปลไปอีกภาษาแล้วแปลกลับ",
+      "options": [
+        "Synonym Replacement",
+        "Window Slicing",
+        "Back Translation",
+        "Time Warping",
+        "Random Deletion"
+      ],
+      "answer": 2,
+      "explanation": "Back translation แปลข้อความไปอีกภาษาแล้วแปลกลับ ได้ประโยคความหมายเดิมแต่ถ้อยคำต่างไป"
+    },
+    {
+      "id": "q4090",
+      "source": "IMG_4090.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Momentum เปรียบได้กับสิ่งใด",
+      "options": [
+        "ลูกบอลกระเด้งสูงตลอด",
+        "นกบินทวนลมอยู่กับที่",
+        "ลูกบอลกลิ้งลงเขาที่สะสมความเร็ว",
+        "น้ำไหลขึ้นภูเขา",
+        "รถจอดนิ่งบนเนิน"
+      ],
+      "answer": 2,
+      "explanation": "Momentum เหมือนลูกบอลกลิ้งลงเขาที่สะสมความเร็ว ช่วยผ่านหลุมตื้นและลดการแกว่ง"
+    },
+    {
+      "id": "q4091",
+      "source": "IMG_4091.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Mini-batch GD ใช้ข้อมูลอย่างไรต่อการอัปเดตหนึ่งครั้ง",
+      "options": [
+        "สุ่มไม่จำกัดจำนวน",
+        "เฉพาะชุด validation",
+        "ทั้งชุด",
+        "ใช้ข้อมูลกลุ่มย่อย เช่น 32 ตัวอย่าง",
+        "1 ตัวอย่าง"
+      ],
+      "answer": 3,
+      "explanation": "Mini-batch GD ใช้ข้อมูลกลุ่มย่อย เช่น 32 หรือ 64 ตัวอย่างต่อการอัปเดต เป็นจุดสมดุลระหว่าง batch GD กับ SGD"
+    },
+    {
+      "id": "q4092",
+      "source": "IMG_4092.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Min-Max Normalization ปรับค่าให้อยู่ในช่วงใด",
+      "options": [
+        "[-1, 1]",
+        "[1, 10]",
+        "[0, 255]",
+        "[0, 1]",
+        "ค่าเฉลี่ย 0 และ SD 1"
+      ],
+      "answer": 3,
+      "explanation": "Min-Max: x′ = (x − min) / (max − min) ได้ค่าในช่วง [0, 1]"
+    },
+    {
+      "id": "q4094",
+      "source": "IMG_4094.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "L1 Regularization มีผลเด่นคล้ายเทคนิคใด",
+      "options": [
+        "การเลือกฟีเจอร์ (Feature Selection)",
+        "Data Augmentation",
+        "Normalization",
+        "Early Stopping",
+        "Resizing"
+      ],
+      "answer": 0,
+      "explanation": "L1 ผลักน้ำหนักบางตัวให้เป็นศูนย์พอดี เท่ากับตัดฟีเจอร์ที่ไม่สำคัญทิ้ง จึงคล้าย feature selection"
+    },
+    {
+      "id": "q4096",
+      "source": "IMG_4096.JPG",
+      "module": "m5",
+      "type": "mc",
+      "question": "Standardization (Z-score) ปรับข้อมูลให้มีคุณสมบัติใด",
+      "options": [
+        "ช่วง [0,255]",
+        "ช่วง [0,1]",
+        "เป็นจำนวนเต็ม",
+        "ค่าเฉลี่ยเท่ากับ 0 และส่วนเบี่ยงเบนมาตรฐานเท่ากับ 1",
+        "ค่าเฉลี่ย 1 และ SD 0"
+      ],
+      "answer": 3,
+      "explanation": "Z-score: z = (x − μ) / σ ทำให้ค่าเฉลี่ยเป็น 0 และส่วนเบี่ยงเบนมาตรฐานเป็น 1"
+    },
+    {
+      "id": "q4122",
+      "source": "IMG_4122.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ความแตกต่างหลัก TensorBoard vs Weights & Biases",
+      "options": [
+        "TensorBoard เก็บข้อมูลในเครื่อง ส่วน W&B เก็บข้อมูลบนคลาวด์และแชร์ทีมง่ายกว่า",
+        "TensorBoard แสดงกราฟ loss/accuracy ไม่ได้",
+        "TensorBoard ใช้ได้ทุกเฟรมเวิร์ก ส่วน W&B ใช้ได้เฉพาะ Keras",
+        "TensorBoard เสียเงินเสมอ ส่วน W&B ฟรีทุกการใช้งาน",
+        "TensorBoard มี Sweeps ในตัว ส่วน W&B ไม่มี"
+      ],
+      "answer": 0,
+      "explanation": "TensorBoard รันในเครื่องตัวเอง ส่วน W&B เก็บผลบนคลาวด์ ทำให้แชร์และเปรียบเทียบหลาย run ในทีมได้ง่ายกว่า"
+    },
+    {
+      "id": "q4123",
+      "source": "IMG_4123.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Random Search\" ทำงานอย่างไร",
+      "options": [
+        "ลองทุกชุดค่าครบถ้วน",
+        "เรียงตามตัวอักษรชื่อ hyperparameter",
+        "ใช้ surrogate model ทำนายก่อนเสมอ",
+        "ลองค่าเดียวซ้ำหลายรอบ",
+        "สุ่มเลือกชุดค่า hyperparameter มาลองตามจำนวนงบประมาณที่กำหนด"
+      ],
+      "answer": 4,
+      "explanation": "Random search สุ่มชุดค่าจาก search space มาลองตามจำนวนครั้งที่งบประมาณอนุญาต"
+    },
+    {
+      "id": "q4124",
+      "source": "IMG_4124.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "Parameter vs Hyperparameter",
+      "options": [
+        "Parameter ใช้เฉพาะ detection",
+        "Parameter เราตั้งเองก่อนฝึก ส่วน Hyperparameter โมเดลเรียนรู้เอง",
+        "Parameter ปรับได้หลังฝึกเท่านั้น",
+        "ความหมายเดียวกัน",
+        "Parameter โมเดลเรียนรู้เองจากข้อมูล ส่วน Hyperparameter เราตั้งเองก่อนฝึก"
+      ],
+      "answer": 4,
+      "explanation": "Parameter (weights, bias) โมเดลเรียนรู้เองระหว่างฝึก ส่วน hyperparameter (LR, batch size) เราตั้งเองก่อนฝึก"
+    },
+    {
+      "id": "q4125",
+      "source": "IMG_4125.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"W&B Sweeps\" ทำหน้าที่อะไร",
+      "options": [
+        "จูน hyperparameter อัตโนมัติพร้อมแสดง dashboard เปรียบเทียบแต่ละชุด",
+        "บันทึกเฉพาะเวอร์ชันไลบรารี",
+        "สร้าง Confusion Matrix อัตโนมัติ",
+        "คำนวณ Accuracy และ F1 อัตโนมัติ",
+        "แปลงไฟล์โมเดลให้ deploy ได้"
+      ],
+      "answer": 0,
+      "explanation": "W&B Sweeps จูน hyperparameter อัตโนมัติ (grid, random, bayes) และแสดง dashboard เปรียบเทียบผลแต่ละชุด"
+    },
+    {
+      "id": "q4126",
+      "source": "IMG_4126.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Precision\" ตอบคำถามใดเกี่ยวกับการทำนาย",
+      "options": [
+        "ของบวกที่มีอยู่จริงทั้งหมด โมเดลจับได้กี่%",
+        "กรอบทำนายซ้อนทับกับกรอบจริงกี่%",
+        "ค่าเฉลี่ยผลลัพธ์ทุกคลาส",
+        "ที่โมเดลทำนายว่าบวก ถูกจริงกี่เปอร์เซ็นต์",
+        "ทำนายถูกทั้งหมดกี่% จากทุกตัวอย่าง"
+      ],
+      "answer": 3,
+      "explanation": "Precision = TP / (TP + FP) ของที่โมเดลทายว่าบวก ถูกจริงกี่เปอร์เซ็นต์"
+    },
+    {
+      "id": "q4127",
+      "source": "IMG_4127.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "สิ่งที่ \"ควรติดตาม\" ในการทดลอง ML",
+      "options": [
+        "เฉพาะชื่อไฟล์ข้อมูล",
+        "เฉพาะราคาอุปกรณ์",
+        "Metrics, hyperparameters และ model artifacts",
+        "เฉพาะชื่อผู้ฝึกและวันที่",
+        "เฉพาะจำนวนบรรทัดโค้ด"
+      ],
+      "answer": 2,
+      "explanation": "สิ่งที่ควรติดตามคือ metrics, hyperparameters และ model artifacts (ไฟล์โมเดล) ของทุก run"
+    },
+    {
+      "id": "q4128",
+      "source": "IMG_4128.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ทำไม F1 ใช้ค่าเฉลี่ยฮาร์มอนิก",
+      "options": [
+        "ค่าเฉลี่ยฮาร์มอนิกลงโทษเมื่อค่าใดค่าหนึ่งต่ำ บังคับให้ทั้งสองต้องดี",
+        "Precision และ Recall เฉลี่ยกันไม่ได้",
+        "ฮาร์มอนิกสูงกว่าค่าเฉลี่ยปกติเสมอ",
+        "ค่าเฉลี่ยปกติใช้ได้เฉพาะข้อมูลสมดุล",
+        "ฮาร์มอนิกคำนวณเร็วกว่ามาก"
+      ],
+      "answer": 0,
+      "explanation": "ค่าเฉลี่ยฮาร์มอนิกจะต่ำเมื่อค่าใดค่าหนึ่งต่ำ เช่น P=1.0, R=0.1 ได้ F1≈0.18 ในขณะที่ค่าเฉลี่ยปกติได้ 0.55"
+    },
+    {
+      "id": "q4129",
+      "source": "IMG_4129.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ข้อใดเป็น \"Hyperparameter\" ตามที่บทเรียนยกตัวอย่าง",
+      "options": [
+        "น้ำหนักของแต่ละนิวรอน",
+        "Learning rate และ batch size",
+        "ผลของ Confusion Matrix",
+        "Accuracy จากชุดทดสอบ",
+        "ค่า bias ที่โมเดลปรับ"
+      ],
+      "answer": 1,
+      "explanation": "Learning rate และ batch size เราตั้งเองก่อนฝึก จึงเป็น hyperparameter ส่วน weights และ bias เป็น parameter"
+    },
+    {
+      "id": "q4130",
+      "source": "IMG_4130.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Experiment Tracking\" สำคัญอย่างไรตามการเปรียบเทียบ",
+      "options": [
+        "ใช้แทนการฝึกอัตโนมัติ",
+        "ใช้แทนชุด test",
+        "เป็นเหมือนสมุดบันทึกแล็บที่จดทุกการทดลอง ช่วยแก้ปัญหาทำซ้ำผลไม่ได้",
+        "ใช้แทน Cross Validation",
+        "เพิ่ม Accuracy โดยตรง"
+      ],
+      "answer": 2,
+      "explanation": "Experiment tracking เหมือนสมุดบันทึกแล็บ จดทุกการทดลองไว้ จึงย้อนดูและทำซ้ำผลได้"
+    },
+    {
+      "id": "q4131",
+      "source": "IMG_4131.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "เพื่อ \"Reproducibility\" ควรบันทึกอะไร",
+      "options": [
+        "เฉพาะ Accuracy สุดท้าย",
+        "Random seed, hyperparameter/config, เวอร์ชันไลบรารี และเวอร์ชันข้อมูล",
+        "เฉพาะจำนวน GPU",
+        "เฉพาะจำนวนชั่วโมงฝึก",
+        "เฉพาะชื่อเครื่องมือติดตาม"
+      ],
+      "answer": 1,
+      "explanation": "การทำซ้ำได้ต้องบันทึก random seed, config/hyperparameter, เวอร์ชันไลบรารี และเวอร์ชันข้อมูล"
+    },
+    {
+      "id": "q4132",
+      "source": "IMG_4132.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Accuracy Paradox\" หมายถึง",
+      "options": [
+        "Accuracy ต่ำแม้ข้อมูลสมดุล",
+        "คำนวณผิดสูตร",
+        "Precision เท่ากับ Recall จนตีความไม่ได้",
+        "mAP กับ IoU ขัดแย้งกัน",
+        "ข้อมูลไม่สมดุลทำให้ Accuracy สูงดูดี แต่โมเดลพลาดคลาสหายากทั้งหมด"
+      ],
+      "answer": 4,
+      "explanation": "ถ้าคลาสบวกมีแค่ 1% โมเดลที่ทายลบทุกตัวได้ accuracy 99% แต่จับคลาสหายากไม่ได้เลย นี่คือ accuracy paradox"
+    },
+    {
+      "id": "q4133",
+      "source": "IMG_4133.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Curse of Dimensionality\" ที่ Grid Search เผชิญ",
+      "options": [
+        "ชุดที่ต้องลองลดลงเมื่อมี hyperparameter มากขึ้น",
+        "ผลไม่แม่นยำพอเสมอ",
+        "ต้องใช้ชุด test ทุกครั้ง",
+        "จำนวนชุดที่ต้องลองเพิ่มขึ้นแบบทวีคูณเมื่อมี hyperparameter มากขึ้น",
+        "ใช้ได้กับ hyperparameter ตัวเดียว"
+      ],
+      "answer": 3,
+      "explanation": "Grid search: จำนวนชุดที่ต้องลอง = ผลคูณจำนวนค่าของทุก hyperparameter เพิ่มแบบทวีคูณ เช่น 5 ค่า × 5 ตัว = 3,125 ชุด"
+    },
+    {
+      "id": "q4134",
+      "source": "IMG_4134.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "นิยาม IoU",
+      "options": [
+        "สัดส่วนบวกจริงที่จับได้",
+        "ค่าเฉลี่ย AP ทุกคลาส",
+        "อัตราส่วนระหว่างพื้นที่ที่ซ้อนทับกันต่อพื้นที่รวมของสองกรอบ/พื้นที่",
+        "ค่าเฉลี่ยฮาร์มอนิก P กับ R",
+        "ทำนายถูกต่อตัวอย่างทั้งหมด"
+      ],
+      "answer": 2,
+      "explanation": "IoU = พื้นที่ซ้อนทับ / พื้นที่รวม ของสองกรอบหรือสองบริเวณ"
+    },
+    {
+      "id": "q4135",
+      "source": "IMG_4135.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Recall\" ตอบคำถามใด",
+      "options": [
+        "ทำนายถูกทั้งหมดกี่%",
+        "ที่ทำนายว่าบวก ถูกจริงกี่%",
+        "ความเชื่อมั่นเฉลี่ย",
+        "พื้นที่ซ้อนทับ",
+        "ของบวกที่มีอยู่จริงทั้งหมด โมเดลจับได้กี่เปอร์เซ็นต์"
+      ],
+      "answer": 4,
+      "explanation": "Recall = TP / (TP + FN) ของบวกที่มีอยู่จริงทั้งหมด โมเดลจับได้กี่เปอร์เซ็นต์"
+    },
+    {
+      "id": "m4136",
+      "source": "IMG_4136.JPG",
+      "module": "m6",
+      "type": "match",
+      "question": "จับคู่คำศัพท์การติดตามการทดลองกับความหมาย",
+      "pairs": [
+        {
+          "term": "W&B Sweeps",
+          "answer": "ความสามารถจูน hyperparameter อัตโนมัติพร้อมดูผลเปรียบเทียบ"
+        },
+        {
+          "term": "TensorBoard",
+          "answer": "เครื่องมือแสดงผลการฝึกที่ทำงานในเครื่องและผูกกับ Keras/TF"
+        },
+        {
+          "term": "Reproducibility",
+          "answer": "ความสามารถในการทำซ้ำผลการทดลองเดิมได้"
+        },
+        {
+          "term": "Experiment Tracking",
+          "answer": "การบันทึกรายละเอียดของทุกการทดลองอย่างเป็นระบบ"
+        },
+        {
+          "term": "Weights & Biases",
+          "answer": "แพลตฟอร์มติดตามการทดลองบนคลาวด์ที่เปรียบเทียบหลาย run ได้ดี"
+        }
+      ]
+    },
+    {
+      "id": "q4137",
+      "source": "IMG_4137.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ชุด \"Validation\" มีหน้าที่หลัก",
+      "options": [
+        "วัดผลสุดท้ายครั้งเดียว",
+        "ฝึกโมเดลโดยตรง",
+        "ใช้เลือกโมเดลหรือจูน hyperparameter ระหว่างการพัฒนา",
+        "ใช้แทนชุด train",
+        "เก็บข้อมูลไม่เกี่ยวข้อง"
+      ],
+      "answer": 2,
+      "explanation": "Validation set ใช้เลือกโมเดลและจูน hyperparameter ระหว่างพัฒนา ส่วน test set ใช้วัดผลสุดท้ายครั้งเดียว"
+    },
+    {
+      "id": "q4138",
+      "source": "IMG_4138.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Search Space\" ในการจูน hyperparameter",
+      "options": [
+        "หน่วยความจำเก็บผล",
+        "ความแม่นยำสูงสุดทางทฤษฎี",
+        "จำนวน epoch",
+        "ชุดข้อมูลฝึก",
+        "เซตของค่าที่เป็นไปได้ของแต่ละ hyperparameter ที่จะนำมาลอง"
+      ],
+      "answer": 4,
+      "explanation": "Search space คือเซตของค่าที่เป็นไปได้ของแต่ละ hyperparameter ที่จะลอง เช่น LR ∈ {1e-4, 1e-3, 1e-2}"
+    },
+    {
+      "id": "q4139",
+      "source": "IMG_4139.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Stratified K-Fold\" ออกแบบมาแก้ปัญหาใด",
+      "options": [
+        "สับลำดับอนุกรมเวลาได้ปลอดภัย",
+        "รักษาสัดส่วนของแต่ละคลาสให้เท่ากันในทุก fold สำหรับข้อมูลไม่สมดุล",
+        "เพิ่มขนาดข้อมูล",
+        "ลดรอบการฝึก",
+        "ลดเวลา Grid Search"
+      ],
+      "answer": 1,
+      "explanation": "Stratified K-Fold รักษาสัดส่วนคลาสในทุก fold ให้ใกล้เคียงข้อมูลทั้งหมด ป้องกัน fold ที่แทบไม่มีคลาสหายาก"
+    },
+    {
+      "id": "q4140",
+      "source": "IMG_4140.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"กฎเหล็ก\" ของการใช้ชุด test",
+      "options": [
+        "ห้ามใช้ชุด test ตัดสินใจระหว่างพัฒนาโมเดล เพราะเท่ากับแอบดูข้อสอบ",
+        "ใช้แทน validation ได้ทุกขั้น",
+        "test ต้องใหญ่กว่า train",
+        "แบ่ง test ใหม่ทุกครั้งที่ปรับสถาปัตยกรรม",
+        "ใช้ test จูนก่อน validation"
+      ],
+      "answer": 0,
+      "explanation": "ถ้าใช้ test ช่วยตัดสินใจระหว่างพัฒนา ก็เท่ากับแอบดูข้อสอบ ผลสุดท้ายจะดีเกินจริง"
+    },
+    {
+      "id": "m4141",
+      "source": "IMG_4141.JPG",
+      "module": "m6",
+      "type": "match",
+      "question": "จับคู่ตัวชี้วัด (metric) กับความหมาย",
+      "pairs": [
+        {
+          "term": "mAP",
+          "answer": "ค่าเฉลี่ย Average Precision ของทุกคลาสในงาน detection"
+        },
+        {
+          "term": "Precision",
+          "answer": "สัดส่วนที่ทำนายว่าบวกแล้วถูกจริง"
+        },
+        {
+          "term": "F1-score",
+          "answer": "ค่าเฉลี่ยฮาร์มอนิกระหว่าง Precision กับ Recall"
+        },
+        {
+          "term": "Accuracy",
+          "answer": "สัดส่วนของการทำนายที่ถูกทั้งหมดเทียบกับจำนวนตัวอย่างทั้งหมด"
+        },
+        {
+          "term": "Recall",
+          "answer": "สัดส่วนของบวกจริงที่โมเดลจับได้ครบ"
+        },
+        {
+          "term": "IoU",
+          "answer": "อัตราส่วนพื้นที่ซ้อนทับต่อพื้นที่รวมของสองกรอบ"
+        }
+      ]
+    },
+    {
+      "id": "q4142",
+      "source": "IMG_4142.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ทำไมข้อมูลอนุกรมเวลา \"ห้ามสับลำดับ\" เมื่อทำ CV",
+      "options": [
+        "ข้อมูลใหญ่เกินไป",
+        "เพราะต้องเคารพทิศทางเวลา มิฉะนั้นโมเดลจะแอบเห็นอนาคต (data leakage)",
+        "Stratified K-Fold ใช้ไม่ได้",
+        "TimeSeriesSplit ไม่รองรับ",
+        "คำนวณ Accuracy ไม่ได้"
+      ],
+      "answer": 1,
+      "explanation": "อนุกรมเวลาต้องเคารพทิศทางเวลา ถ้าสับลำดับ โมเดลจะได้ฝึกด้วยข้อมูลอนาคตแล้วไปทายอดีต (data leakage)"
+    },
+    {
+      "id": "q4143",
+      "source": "IMG_4143.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "Confusion Matrix หลายคลาส ตำแหน่ง off-diagonal บอกอะไร",
+      "options": [
+        "จำนวนที่ทำนายถูกแต่ละคลาส",
+        "บอกว่าโมเดลสับสนระหว่างคลาสใดกับคลาสใด",
+        "จำนวนรอบ K-Fold",
+        "เป็นอนุกรมเวลาหรือไม่",
+        "Accuracy โดยรวม"
+      ],
+      "answer": 1,
+      "explanation": "แนวทแยงคือจำนวนที่ทายถูก ช่องนอกแนวทแยงบอกว่าคลาสจริง A ถูกทายเป็นคลาส B กี่ครั้ง จึงเห็นว่าโมเดลสับสนคู่ไหน"
+    },
+    {
+      "id": "q4144",
+      "source": "IMG_4144.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Grid Search\" ทำงานอย่างไร",
+      "options": [
+        "เลือกชุดเดียวที่กำหนดไว้",
+        "สุ่มตามงบ",
+        "ลองทุกชุดค่าที่เป็นไปได้ของ hyperparameter อย่างครบถ้วน",
+        "ปรับตาม gradient",
+        "ใช้ผลก่อนหน้าเลือกชุดถัดไป"
+      ],
+      "answer": 2,
+      "explanation": "Grid search ลองทุกชุดค่าใน search space อย่างครบถ้วน"
+    },
+    {
+      "id": "q4145",
+      "source": "IMG_4145.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"K-Fold Cross Validation\" ทำงานอย่างไร",
+      "options": [
+        "เรียงตามเวลาแล้ววัดช่วงล่าสุดช่วงเดียว",
+        "ใช้ทั้งหมดเป็น train",
+        "แบ่งข้อมูลเป็น K ส่วน หมุนเวียนใช้ทีละส่วนเป็น validation แล้วเฉลี่ยผล",
+        "แบ่ง 2 ส่วนวัดครั้งเดียว",
+        "สุ่มตัดข้อมูลทิ้งครึ่งหนึ่ง"
+      ],
+      "answer": 2,
+      "explanation": "K-Fold แบ่งข้อมูลเป็น K ส่วน ฝึก K รอบ แต่ละรอบใช้ 1 ส่วนเป็น validation แล้วเฉลี่ยผลทั้ง K รอบ"
+    },
+    {
+      "id": "q4146",
+      "source": "IMG_4146.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ทำไมแบ่ง train/test \"ครั้งเดียว\" อาจไม่น่าเชื่อถือ",
+      "options": [
+        "โมเดลเรียนรู้จาก test อัตโนมัติ",
+        "ใช้เวลานานกว่า",
+        "train กับ test ขนาดเท่ากันเสมอ",
+        "ทำได้เฉพาะอนุกรมเวลา",
+        "ผลลัพธ์อาจขึ้นกับว่าข้อมูลตัวยากตกไปอยู่ฝั่งไหนพอดี เหมือน \"ดวงดี/ดวงร้าย\""
+      ],
+      "answer": 4,
+      "explanation": "การแบ่งครั้งเดียวผลขึ้นกับโชค ถ้าข้อมูลยากตกไปอยู่ใน test มากผลจะต่ำ ถ้าน้อยผลจะสูง Cross validation ช่วยลดความผันผวนนี้"
+    },
+    {
+      "id": "q4147",
+      "source": "IMG_4147.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "TP (True Positive) หมายถึง",
+      "options": [
+        "ทำนายไม่ตรงทั้งสองฝั่ง",
+        "ทำนายลบ แต่จริงเป็นบวก",
+        "ทำนายว่าเป็นบวก และของจริงเป็นบวก (ทำนายถูก)",
+        "ทำนายลบ จริงลบ",
+        "ทำนายบวก แต่จริงลบ"
+      ],
+      "answer": 2,
+      "explanation": "TP = ทายว่าบวก และของจริงเป็นบวก (b คือ FN, d คือ TN, e คือ FP)"
+    },
+    {
+      "id": "q4148",
+      "source": "IMG_4148.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ลักษณะเด่นของ TensorBoard",
+      "options": [
+        "ทำงานในเครื่องตัวเอง (local) ฟรี และผูกกับ TensorFlow/Keras แน่น",
+        "มี Sweeps ในตัวเหมือน W&B",
+        "ทำงานบนคลาวด์เท่านั้น เสียเงิน",
+        "ใช้ได้เฉพาะ detection/segmentation",
+        "เปรียบเทียบหลายการทดลองได้ดีกว่าทุกเครื่องมือ"
+      ],
+      "answer": 0,
+      "explanation": "TensorBoard รันในเครื่อง ใช้ฟรี และผูกกับ TensorFlow/Keras แน่น"
+    },
+    {
+      "id": "q4149",
+      "source": "IMG_4149.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "แนวคิดหลักของ \"Bayesian Optimization\"",
+      "options": [
+        "ใช้ค่า default เสมอ",
+        "ใช้ผลลัพธ์ของชุดที่ลองไปแล้วช่วยตัดสินใจเลือกชุดถัดไปอย่างชาญฉลาด",
+        "ค่าเฉลี่ยทุกชุด",
+        "สุ่มโดยไม่สนผลก่อนหน้า",
+        "ลองทุกชุดเหมือน Grid"
+      ],
+      "answer": 1,
+      "explanation": "Bayesian optimization สร้าง surrogate model จากผลที่ลองแล้ว เพื่อเลือกชุดถัดไปที่น่าจะดีที่สุด"
+    },
+    {
+      "id": "m4150",
+      "source": "IMG_4150.JPG",
+      "module": "m6",
+      "type": "match",
+      "question": "จับคู่แนวคิดการ validate แบบจำลองกับความหมาย",
+      "pairs": [
+        {
+          "term": "Train set",
+          "answer": "ใช้ฝึกโมเดลและปรับน้ำหนักระหว่างการเรียนรู้"
+        },
+        {
+          "term": "Time Series CV",
+          "answer": "ใช้ forward chaining และห้ามสับลำดับข้อมูล"
+        },
+        {
+          "term": "Stratified K-Fold",
+          "answer": "รักษาสัดส่วนของแต่ละคลาสให้เท่ากันในทุก fold"
+        },
+        {
+          "term": "Test set",
+          "answer": "ใช้วัดผลสุดท้ายเพียงครั้งเดียวตอนจบการพัฒนา"
+        },
+        {
+          "term": "Validation set",
+          "answer": "ใช้เลือกโมเดลหรือจูน hyperparameter ระหว่างพัฒนา"
+        },
+        {
+          "term": "K-Fold Cross Validation",
+          "answer": "หมุนเวียนแต่ละส่วนข้อมูลเป็น validation แล้วเฉลี่ยผล"
+        }
+      ]
+    },
+    {
+      "id": "q4151",
+      "source": "IMG_4151.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "งานตรวจขยะอันตรายที่เน้นความปลอดภัย ข้อผิดพลาดแบบใดอันตรายที่สุด",
+      "options": [
+        "TP เพราะทำนายถูกมากเกินไป",
+        "FN (False Negative) เพราะพลาดขยะอันตรายไป",
+        "เท่ากันทุกแบบ",
+        "TN",
+        "FP เพราะเตือนผิดบ่อย"
+      ],
+      "answer": 1,
+      "explanation": "FN คือมีขยะอันตรายจริงแต่ระบบบอกว่าไม่มี เป็นข้อผิดพลาดที่อันตรายที่สุด งานนี้จึงต้องเน้น recall"
+    },
+    {
+      "id": "m4152",
+      "source": "IMG_4152.JPG",
+      "module": "m6",
+      "type": "match",
+      "question": "จับคู่คำศัพท์การจูน hyperparameter กับความหมาย",
+      "pairs": [
+        {
+          "term": "Grid Search",
+          "answer": "ค้นหาโดยลองทุกชุดค่าที่เป็นไปได้อย่างครบถ้วน"
+        },
+        {
+          "term": "Hyperparameter",
+          "answer": "ค่าที่ผู้พัฒนาต้องตั้งเองก่อนเริ่มฝึก"
+        },
+        {
+          "term": "Bayesian Optimization",
+          "answer": "ใช้ผลการลองก่อนหน้าช่วยเลือกชุดถัดไปอย่างชาญฉลาด"
+        },
+        {
+          "term": "Parameter",
+          "answer": "ค่าที่โมเดลเรียนรู้เองจากข้อมูลระหว่างฝึก"
+        },
+        {
+          "term": "Random Search",
+          "answer": "สุ่มเลือกชุดค่ามาลองตามจำนวนงบที่กำหนด"
+        },
+        {
+          "term": "Search Space",
+          "answer": "เซตของค่าที่เป็นไปได้ของแต่ละ hyperparameter ที่จะลอง"
+        }
+      ]
+    },
+    {
+      "id": "q4153",
+      "source": "IMG_4153.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "\"Accuracy\" หมายถึง",
+      "options": [
+        "สัดส่วนของการทำนายที่ถูกทั้งหมดเทียบกับจำนวนตัวอย่างทั้งหมด",
+        "ทำนายบวกที่ถูกต่อทำนายบวกทั้งหมด",
+        "บวกจริงที่จับได้",
+        "พื้นที่ซ้อนทับ",
+        "ค่าเฉลี่ยฮาร์มอนิก"
+      ],
+      "answer": 0,
+      "explanation": "Accuracy = (TP + TN) / ตัวอย่างทั้งหมด"
+    },
+    {
+      "id": "q4154",
+      "source": "IMG_4154.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ความสามารถเด่นของ W&B",
+      "options": [
+        "แทนการฝึกโดยไม่เขียนโค้ด",
+        "ใช้ได้เฉพาะ CNN",
+        "เปรียบเทียบหลายการทดลอง (run) พร้อมกันบน dashboard บนคลาวด์",
+        "ทำงานเฉพาะในเครื่องไม่ต่อเน็ต",
+        "บันทึก hyperparameter ไม่ได้"
+      ],
+      "answer": 2,
+      "explanation": "W&B เด่นเรื่องเปรียบเทียบหลาย run บน dashboard ออนไลน์ และแชร์กับทีมได้"
+    },
+    {
+      "id": "q4155",
+      "source": "IMG_4155.JPG",
+      "module": "m6",
+      "type": "mc",
+      "question": "ทำไม Random Search มักดีกว่า Grid Search ในงบเท่ากัน",
+      "options": [
+        "Grid ใช้ได้กับ DL เท่านั้น",
+        "Random รับประกันเจอดีที่สุด",
+        "Random ฝึกต่อรอบเร็วกว่า",
+        "เพราะสำรวจค่าของ hyperparameter ที่สำคัญได้หลากหลายกว่าในงบเท่ากัน",
+        "Random ไม่ต้องใช้ validation"
+      ],
+      "answer": 3,
+      "explanation": "มักมี hyperparameter ไม่กี่ตัวที่สำคัญจริง Random search ลองค่าของตัวที่สำคัญได้หลากหลายกว่า ในขณะที่ grid ซ้ำค่าเดิมหลายรอบ (Bergstra & Bengio, 2012)"
+    },
+    {
+      "id": "m4170",
+      "source": "IMG_4170.JPG",
+      "module": "m7",
+      "type": "match",
+      "question": "จับคู่ฟอร์แมตและเทคนิคการ Export โมเดลกับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "ONNX",
+          "answer": "ฟอร์แมตมาตรฐานกลางสำหรับแลกเปลี่ยนโมเดลข้ามเฟรมเวิร์ก"
+        },
+        {
+          "term": "TorchScript",
+          "answer": "ฟอร์แมตที่ทำให้โมเดล PyTorch รันได้โดยไม่ต้องพึ่งโค้ด Python ต้นฉบับ"
+        },
+        {
+          "term": "Quantization",
+          "answer": "เทคนิคลดความละเอียดตัวเลขของน้ำหนักเพื่อให้โมเดลเล็กและเร็วขึ้น"
+        },
+        {
+          "term": "TensorFlow Lite (LiteRT)",
+          "answer": "ฟอร์แมตขนาดเล็กเหมาะกับมือถือและอุปกรณ์ฝังตัว"
+        },
+        {
+          "term": "Operator Fusion",
+          "answer": "เทคนิครวมหลายการคำนวณเข้าเป็นขั้นตอนเดียว"
+        },
+        {
+          "term": "TensorRT",
+          "answer": "ตัว optimize ของ NVIDIA สำหรับรันบน GPU ของ NVIDIA โดยเฉพาะ"
+        }
+      ]
+    },
+    {
+      "id": "q4171",
+      "source": "IMG_4171.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "REST API สื่อสารผ่านโปรโตคอลใดและรับส่งข้อมูลรูปแบบใด",
+      "options": [
+        "FTP + ไฟล์ไบนารี",
+        "USB + XML เท่านั้น",
+        "สื่อสารผ่าน HTTP และรับส่งข้อมูลเป็น JSON",
+        "Bluetooth + CSV",
+        "SMTP + อีเมล"
+      ],
+      "answer": 2,
+      "explanation": "REST API สื่อสารผ่าน HTTP และรับส่งข้อมูลเป็น JSON เป็นหลัก"
+    },
+    {
+      "id": "q4172",
+      "source": "IMG_4172.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Edge AI หมายถึง",
+      "options": [
+        "เก็บข้อมูลทั้งหมดบนอินเทอร์เน็ต",
+        "ใช้ซูเปอร์คอมพิวเตอร์",
+        "ฝึกโมเดลใหญ่บนคลาวด์",
+        "การประมวลผล AI บนตัวอุปกรณ์ปลายทางเองโดยไม่ต้องส่งข้อมูลไปเซิร์ฟเวอร์คลาวด์",
+        "ส่งภาพทุกเฟรมขึ้นเซิร์ฟเวอร์"
+      ],
+      "answer": 3,
+      "explanation": "Edge AI คือรันโมเดลบนอุปกรณ์ปลายทาง เช่น กล้อง มือถือ Jetson โดยไม่ต้องส่งข้อมูลไปคลาวด์"
+    },
+    {
+      "id": "q4173",
+      "source": "IMG_4173.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "JetPack คืออะไร",
+      "options": [
+        "ฟอร์แมตไฟล์โมเดลสำหรับ iOS",
+        "ระบบปฏิบัติการของ Jetson ที่ประกอบด้วย Ubuntu, CUDA และไลบรารีที่จำเป็น",
+        "เครื่องมือ quantize",
+        "เฟรมเวิร์ก REST API บน Raspberry Pi",
+        "โปรแกรมตรวจความแม่นยำหลัง deploy"
+      ],
+      "answer": 1,
+      "explanation": "JetPack SDK คือระบบปฏิบัติการและชุดซอฟต์แวร์ของ Jetson ประกอบด้วย Ubuntu (L4T), CUDA, cuDNN, TensorRT"
+    },
+    {
+      "id": "q4174",
+      "source": "IMG_4174.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Model Deployment หมายถึง",
+      "options": [
+        "แบ่งชุดข้อมูล",
+        "ลดขนาดภาพ",
+        "บันทึกโมเดลลงไฟล์",
+        "การเปิดให้โมเดลพร้อมรับงานทำนายจากภายนอก",
+        "ฝึกด้วยข้อมูลใหม่"
+      ],
+      "answer": 3,
+      "explanation": "Deployment คือการนำโมเดลไปติดตั้งให้พร้อมรับคำขอทำนายจากผู้ใช้หรือระบบภายนอก"
+    },
+    {
+      "id": "m4175",
+      "source": "IMG_4175.JPG",
+      "module": "m7",
+      "type": "match",
+      "question": "จับคู่ศัพท์ด้านการ Deploy โมเดลกับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Container",
+          "answer": "instance ที่กำลังรันจาก image"
+        },
+        {
+          "term": "REST API",
+          "answer": "ช่องทางให้โปรแกรมสื่อสารกันผ่าน HTTP ด้วยการส่ง request และรับ response"
+        },
+        {
+          "term": "Dockerfile",
+          "answer": "ไฟล์คำสั่งที่ใช้สร้าง image"
+        },
+        {
+          "term": "FastAPI",
+          "answer": "framework สมัยใหม่ที่เร็วกว่า มีเอกสารอัตโนมัติและตรวจสอบชนิดข้อมูลอัตโนมัติ"
+        },
+        {
+          "term": "Image (Docker)",
+          "answer": "แม่แบบที่บรรจุแอปและสภาพแวดล้อมทั้งหมด"
+        },
+        {
+          "term": "Flask",
+          "answer": "web framework ของ Python ที่เล็กและเรียบง่าย เหมาะสร้าง API เร็ว ๆ"
+        }
+      ]
+    },
+    {
+      "id": "m4176",
+      "source": "IMG_4176.JPG",
+      "module": "m7",
+      "type": "match",
+      "question": "จับคู่ฮาร์ดแวร์ Edge AI กับคุณลักษณะ",
+      "pairs": [
+        {
+          "term": "JetPack",
+          "answer": "ระบบปฏิบัติการของ Jetson ที่ประกอบด้วย Ubuntu, CUDA และไลบรารี"
+        },
+        {
+          "term": "Microcontroller",
+          "answer": "หน่วยประมวลผลเล็กมาก เหมาะงาน TinyML อย่างเซนเซอร์"
+        },
+        {
+          "term": "Mobile",
+          "answer": "ใช้ CPU/GPU/NPU เหมาะกับแอปบนมือถือ ใช้ TFLite หรือ Core ML"
+        },
+        {
+          "term": "NVIDIA Jetson",
+          "answer": "มี GPU (CUDA) ในตัว เหมาะงานวิดีโอเรียลไทม์ ใช้ฟอร์แมต TensorRT"
+        },
+        {
+          "term": "Raspberry Pi",
+          "answer": "ประมวลผลด้วย CPU เหมาะงานเบาถึงปานกลาง ราคาประหยัด ใช้ฟอร์แมต TFLite หรือ ONNX"
+        }
+      ]
+    },
+    {
+      "id": "q4177",
+      "source": "IMG_4177.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ทำไม .keras หรือ .pth ไม่เหมาะ deploy โดยตรง",
+      "options": [
+        "ต้องใช้อินเทอร์เน็ตตลอด",
+        "เพราะผูกกับเฟรมเวิร์กและไม่ได้ optimize ความเร็ว/ขนาดสำหรับการทำนาย",
+        "ใช้ได้เฉพาะภาพเล็ก",
+        "เก็บน้ำหนักไม่ได้",
+        "ไฟล์เล็กเกินไป"
+      ],
+      "answer": 1,
+      "explanation": "ไฟล์ตอนฝึกผูกกับเฟรมเวิร์กต้นทาง และไม่ได้ปรับแต่งเรื่องขนาดหรือความเร็วสำหรับการทำนาย จึงควร export เป็นฟอร์แมตสำหรับ inference"
+    },
+    {
+      "id": "q4178",
+      "source": "IMG_4178.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ONNX มีบทบาท",
+      "options": [
+        "OS สำหรับ edge",
+        "ฮาร์ดแวร์ NVIDIA",
+        "เฟรมเวิร์ก REST API",
+        "เทคนิคลดความละเอียดตัวเลข",
+        "เป็นฟอร์แมตมาตรฐานกลางสำหรับแลกเปลี่ยนโมเดลข้ามเฟรมเวิร์ก"
+      ],
+      "answer": 4,
+      "explanation": "ONNX (Open Neural Network Exchange) เป็นฟอร์แมตกลาง export จาก PyTorch แล้วไปรันด้วย ONNX Runtime หรือแปลงต่อได้"
+    },
+    {
+      "id": "q4179",
+      "source": "IMG_4179.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "หลัง deploy บน edge ควร monitor อะไร",
+      "options": [
+        "ราคาตลาดฮาร์ดแวร์",
+        "จำนวนภาษาโปรแกรม",
+        "จำนวนผู้ใช้แอป",
+        "FPS อุณหภูมิ และการใช้หน่วยความจำของอุปกรณ์",
+        "จำนวนครั้งรีสตาร์ทเซิร์ฟเวอร์"
+      ],
+      "answer": 3,
+      "explanation": "บน edge ควรเฝ้า FPS อุณหภูมิ (เสี่ยง thermal throttling) และการใช้หน่วยความจำ"
+    },
+    {
+      "id": "q4180",
+      "source": "IMG_4180.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Docker แก้ปัญหา \"works on my machine\" อย่างไร",
+      "options": [
+        "เพิ่มความเร็วการฝึก",
+        "บรรจุแอป ไลบรารี และสภาพแวดล้อมทั้งหมดไว้ในกล่องเดียวที่รันได้เหมือนกันทุกที่",
+        "ลดขนาดไฟล์โมเดล",
+        "แปลงเป็น ONNX อัตโนมัติ",
+        "เพิ่มความแม่นยำ"
+      ],
+      "answer": 1,
+      "explanation": "Docker บรรจุแอป ไลบรารี และสภาพแวดล้อมไว้ใน image เดียว รันที่ไหนก็ได้ผลเหมือนกัน"
+    },
+    {
+      "id": "q4181",
+      "source": "IMG_4181.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Raspberry Pi ประมวลผลหลักด้วยอะไร เหมาะกับงานใด",
+      "options": [
+        "CPU เป็นหลัก เหมาะกับงานเบาถึงปานกลางและราคาประหยัด",
+        "GPU ใหญ่ วิดีโอเรียลไทม์",
+        "FPGA",
+        "NPU มือถือ",
+        "TPU ใหญ่"
+      ],
+      "answer": 0,
+      "explanation": "Raspberry Pi ใช้ CPU ARM เป็นหลัก ราคาประหยัด เหมาะงานเบาถึงปานกลาง"
+    },
+    {
+      "id": "q4182",
+      "source": "IMG_4182.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ข้อได้เปรียบของ Edge AI เทียบ Cloud AI",
+      "options": [
+        "ต้องส่งข้อมูลขึ้นเน็ตตลอด",
+        "พลังประมวลผลสูงกว่าคลาวด์ไม่จำกัด",
+        "ใช้แบนด์วิดท์มากกว่า",
+        "ไม่มีข้อจำกัดทรัพยากร",
+        "ความหน่วงต่ำมากและสามารถทำงานได้แม้ไม่มีอินเทอร์เน็ต"
+      ],
+      "answer": 4,
+      "explanation": "Edge AI ประมวลผลในเครื่อง จึงหน่วงต่ำ ทำงานได้แม้ไม่มีเน็ต และไม่ต้องส่งข้อมูลส่วนตัวออกไป"
+    },
+    {
+      "id": "q4183",
+      "source": "IMG_4183.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "TensorRT เหมาะกับฮาร์ดแวร์ใด",
+      "options": [
+        "CPU ของ Raspberry Pi",
+        "microcontroller",
+        "GPU ของ NVIDIA รวมถึงอุปกรณ์ตระกูล Jetson",
+        "iOS เท่านั้น",
+        "เซิร์ฟเวอร์ไม่มีการ์ดจอ"
+      ],
+      "answer": 2,
+      "explanation": "TensorRT เป็นตัว optimize ของ NVIDIA ใช้ได้กับ GPU NVIDIA รวมถึงบอร์ด Jetson"
+    },
+    {
+      "id": "q4184",
+      "source": "IMG_4184.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Operator Fusion คือ",
+      "options": [
+        "ลดจำนวนชั้น",
+        "เพิ่มพารามิเตอร์",
+        "แบ่งการคำนวณเป็นหลายขั้น",
+        "การรวมหลายการคำนวณเข้าเป็นขั้นตอนเดียว เช่น รวม Conv กับ BN และ ReLU",
+        "แปลงภาพเป็นขนาดมาตรฐาน"
+      ],
+      "answer": 3,
+      "explanation": "Operator fusion รวมหลาย operation เช่น Conv + BN + ReLU เป็น kernel เดียว ลดการอ่านเขียนหน่วยความจำ จึงเร็วขึ้น"
+    },
+    {
+      "id": "q4185",
+      "source": "IMG_4185.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Dockerfile มีหน้าที่",
+      "options": [
+        "ไฟล์โมเดลเก็บน้ำหนัก",
+        "เป็นไฟล์คำสั่งหรือสูตรที่ใช้สร้าง image",
+        "เอกสารทดสอบ API",
+        "ไฟล์ข้อมูลฝึก",
+        "instance ที่กำลังรันจากอิมเมจ"
+      ],
+      "answer": 1,
+      "explanation": "Dockerfile เป็นไฟล์คำสั่ง (สูตร) ที่ docker build อ่านเพื่อสร้าง image"
+    },
+    {
+      "id": "q4186",
+      "source": "IMG_4186.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "TensorFlow Lite (LiteRT) ออกแบบมาสำหรับอุปกรณ์ใด",
+      "options": [
+        "data warehouse",
+        "มือถือ อุปกรณ์ฝังตัว และ microcontroller",
+        "คอมพิวเตอร์ตั้งโต๊ะฝึกโมเดลใหญ่",
+        "ซูเปอร์คอมพิวเตอร์",
+        "เซิร์ฟเวอร์คลาวด์ GPU มาก"
+      ],
+      "answer": 1,
+      "explanation": "TensorFlow Lite (ปัจจุบันชื่อ LiteRT) ออกแบบมาสำหรับมือถือ อุปกรณ์ฝังตัว และ microcontroller"
+    },
+    {
+      "id": "q4187",
+      "source": "IMG_4187.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ทำไมเปรียบ REST API กับร้านอาหาร",
+      "options": [
+        "ลูกค้าต้องรู้วิธีปรุง",
+        "API ทำงานเฉพาะเวลาร้านเปิด",
+        "เพราะ client สั่งตามเมนู (request) และรอรับผล (response) โดยไม่ต้องรู้ว่าเบื้องหลังทำงานอย่างไร",
+        "ใช้ภาษาโปรแกรมเดียวกันเสมอ",
+        "ต้องใช้วัตถุดิบจากครัวจริง"
+      ],
+      "answer": 2,
+      "explanation": "เหมือนลูกค้าสั่งตามเมนู (request) แล้วรออาหาร (response) โดยไม่ต้องรู้ว่าในครัวทำอย่างไร"
+    },
+    {
+      "id": "q4188",
+      "source": "IMG_4188.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "NVIDIA Jetson เหมาะกับงานใด",
+      "options": [
+        "เก็บข้อมูลขนาดใหญ่",
+        "งานหนักและเรียลไทม์ เช่น ประมวลผลวิดีโอ เนื่องจากมี GPU ในตัว",
+        "ใช้ไฟต่ำที่สุดทุกสถานการณ์",
+        "งานเบาเพราะใช้ CPU เท่านั้น",
+        "เชื่อมกล้องไม่ได้"
+      ],
+      "answer": 1,
+      "explanation": "Jetson มี GPU CUDA ในตัว จึงเหมาะงานหนักและเรียลไทม์ เช่น วิเคราะห์วิดีโอ"
+    },
+    {
+      "id": "q4189",
+      "source": "IMG_4189.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "องค์ประกอบใดของโมเดลสำคัญที่สุด เพราะเป็นตัวแทนความรู้ที่โมเดลเรียนรู้มา",
+      "options": [
+        "Architecture",
+        "Learning Rate Schedule",
+        "Optimizer State",
+        "Training Config",
+        "Weights (น้ำหนัก)"
+      ],
+      "answer": 4,
+      "explanation": "Weights คือความรู้ที่โมเดลเรียนรู้มา ถ้าไม่มี weights ก็มีแค่โครงเปล่า ๆ"
+    },
+    {
+      "id": "q4190",
+      "source": "IMG_4190.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": ".pth และ .pt ใน PyTorch สัมพันธ์กันอย่างไร",
+      "options": [
+        ".pth ใช้กับ Keras, .pt กับ PyTorch",
+        "เป็นเพียงชื่อนามสกุลไฟล์ตามธรรมเนียม ทำงานเหมือนกัน",
+        ".pth ฝึกต่อ .pt deploy",
+        ".pth ไม่บีบอัด .pt บีบอัด",
+        ".pth เก็บ architecture .pt เก็บ weights"
+      ],
+      "answer": 1,
+      "explanation": ".pt และ .pth เป็นเพียงนามสกุลตามธรรมเนียม torch.save ทำงานเหมือนกันทั้งสองแบบ"
+    },
+    {
+      "id": "q4192",
+      "source": "IMG_4192.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Quantization คือเทคนิคใด",
+      "options": [
+        "รวมหลายโมเดล",
+        "เพิ่มชั้น",
+        "เพิ่มความละเอียดภาพ",
+        "การลดความละเอียดของตัวเลขน้ำหนักเพื่อให้โมเดลเล็กลงและเร็วขึ้น",
+        "ขยายชุดข้อมูล"
+      ],
+      "answer": 3,
+      "explanation": "Quantization ลดความละเอียดตัวเลขน้ำหนัก เช่น FP32 เป็น INT8 ไฟล์เล็กลงราว 4 เท่าและเร็วขึ้น"
+    },
+    {
+      "id": "q4193",
+      "source": "IMG_4193.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ทำไม quantization สำคัญพิเศษสำหรับ edge",
+      "options": [
+        "ต้องใช้ข้อมูลฝึกเพิ่ม",
+        "เพิ่มความแม่นยำสูงสุด",
+        "ต่อเน็ตไม่ได้บางครั้ง",
+        "จำเป็นเฉพาะบนคลาวด์",
+        "เพราะอุปกรณ์ edge มีทรัพยากรจำกัด การลดขนาดและเพิ่มความเร็วจึงจำเป็นมาก"
+      ],
+      "answer": 4,
+      "explanation": "อุปกรณ์ edge มีหน่วยความจำ พลังประมวลผล และพลังงานจำกัด การลดขนาดและเพิ่มความเร็วจึงจำเป็นมาก"
+    },
+    {
+      "id": "q4195",
+      "source": "IMG_4195.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ModelCheckpoint มีประโยชน์อย่างไร",
+      "options": [
+        "ลดชั้นอัตโนมัติ",
+        "คำนวณ IoU",
+        "แปลงเป็น ONNX",
+        "บันทึกโมเดลที่มีผลลัพธ์ดีที่สุดเก็บไว้โดยอัตโนมัติระหว่างการฝึก",
+        "เพิ่มข้อมูลฝึก"
+      ],
+      "answer": 3,
+      "explanation": "ModelCheckpoint เป็น callback ที่บันทึกโมเดลอัตโนมัติ โดยเลือกเก็บ epoch ที่ค่าที่เฝ้าดูดีที่สุด (save_best_only)"
+    },
+    {
+      "id": "q4196",
+      "source": "IMG_4196.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "REST API สำหรับ inference มักใช้ HTTP Method ใดส่งข้อมูล",
+      "options": [
+        "DELETE",
+        "GET",
+        "PUT เท่านั้น",
+        "HEAD",
+        "POST"
+      ],
+      "answer": 4,
+      "explanation": "Inference API นิยมใช้ POST เพราะต้องส่งข้อมูล เช่น ภาพหรือ JSON ไปใน body ของคำขอ"
+    },
+    {
+      "id": "q4197",
+      "source": "IMG_4197.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ทำไม PyTorch นิยมบันทึก state_dict มากกว่าทั้งอ็อบเจกต์",
+      "options": [
+        "ฝึกต่อได้โดยไม่ต้องมีโค้ดคลาสเดิม",
+        "เพราะ state_dict ยืดหยุ่นกว่าและทนต่อการเปลี่ยนแปลงของโค้ดมากกว่า",
+        "ไฟล์ใหญ่กว่า",
+        "ใช้ได้กับ TensorFlow เท่านั้น",
+        "เก็บค่าความแม่นยำไว้ด้วย"
+      ],
+      "answer": 1,
+      "explanation": "state_dict เก็บเฉพาะน้ำหนัก ไม่ผูกกับโครงสร้างไฟล์โค้ดแบบ pickle ทั้งอ็อบเจกต์ จึงยืดหยุ่นและทนต่อการแก้โค้ดมากกว่า (แต่ยังต้องมีคลาสโมเดลตอนโหลด)"
+    },
+    {
+      "id": "q4198",
+      "source": "IMG_4198.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Microcontroller เหมาะกับงานใด",
+      "options": [
+        "วิดีโอความละเอียดสูงเรียลไทม์",
+        "จัดเก็บข้อมูลใหญ่",
+        "ฝึกโมเดลใหญ่",
+        "ภาพการแพทย์แม่นยำสูงสุด",
+        "งาน TinyML ขนาดจิ๋ว เช่น การประมวลผลจากเซนเซอร์"
+      ],
+      "answer": 4,
+      "explanation": "Microcontroller เล็กมากและใช้ไฟต่ำ เหมาะงาน TinyML เช่น ประมวลผลสัญญาณเซนเซอร์หรือ keyword spotting"
+    },
+    {
+      "id": "q4199",
+      "source": "IMG_4199.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ขั้นตอนใดใน inference pipeline สำคัญที่สุด เพราะต้องตรงกับตอนฝึกเป๊ะ",
+      "options": [
+        "Postprocess",
+        "การส่ง JSON กลับ",
+        "Preprocess",
+        "Predict",
+        "รับ input"
+      ],
+      "answer": 2,
+      "explanation": "Preprocess ตอนใช้งานต้องเหมือนตอนฝึกทุกประการ (ขนาดภาพ normalization ลำดับสี) ไม่เช่นนั้นผลจะเพี้ยน"
+    },
+    {
+      "id": "q4200",
+      "source": "IMG_4200.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Ultralytics export สะดวกอย่างไร",
+      "options": [
+        "ลดข้อมูลฝึก",
+        "สร้าง REST API อัตโนมัติ",
+        "เพิ่มความแม่นยำ",
+        "ใช้ได้เฉพาะ PyTorch",
+        "รวมการ export ไปฟอร์แมตต่าง ๆ เช่น ONNX, TFLite, TensorRT ไว้ในคำสั่งเดียว"
+      ],
+      "answer": 4,
+      "explanation": "Ultralytics ใช้คำสั่งเดียว model.export(format=...) ส่งออกได้หลายฟอร์แมต เช่น ONNX, TFLite, TensorRT"
+    },
+    {
+      "id": "q4201",
+      "source": "IMG_4201.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "Model Serialization หมายถึง",
+      "options": [
+        "วัดความแม่นยำด้วยข้อมูลใหม่",
+        "แบ่งข้อมูล",
+        "ปรับพารามิเตอร์ระหว่างฝึก",
+        "แปลงภาพให้ขนาดเท่ากัน",
+        "การบันทึกโมเดลที่ฝึกเสร็จแล้วลงไฟล์เพื่อนำกลับมาใช้ใหม่ได้โดยไม่ต้องฝึกซ้ำ"
+      ],
+      "answer": 4,
+      "explanation": "Serialization คือบันทึกโมเดลลงไฟล์ เพื่อโหลดกลับมาใช้ได้โดยไม่ต้องฝึกใหม่"
+    },
+    {
+      "id": "q4202",
+      "source": "IMG_4202.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "deploy บนมือถือ iOS มักใช้ฟอร์แมตใด",
+      "options": [
+        "SavedModel",
+        "Core ML",
+        "ONNX Runtime เท่านั้น",
+        "TensorRT engine",
+        "TFLite Micro"
+      ],
+      "answer": 1,
+      "explanation": "บน iOS นิยมแปลงโมเดลเป็น Core ML เพื่อใช้ CPU/GPU/Neural Engine ของ Apple"
+    },
+    {
+      "id": "m4203",
+      "source": "IMG_4203.JPG",
+      "module": "m7",
+      "type": "match",
+      "question": "จับคู่ศัพท์ด้านการบันทึกโมเดล (Model Serialization) กับคำอธิบาย",
+      "pairs": [
+        {
+          "term": "Optimizer State",
+          "answer": "สถานะของอัลกอริทึมปรับน้ำหนัก เช่น momentum ใน Adam"
+        },
+        {
+          "term": "state_dict",
+          "answer": "พจนานุกรมที่เก็บน้ำหนักของทุกชั้นใน PyTorch"
+        },
+        {
+          "term": "Weights",
+          "answer": "ค่าพารามิเตอร์ที่เรียนรู้มา ถือเป็นความรู้ของโมเดล"
+        },
+        {
+          "term": "model.eval()",
+          "answer": "คำสั่งสลับ PyTorch เป็นโหมดทำนาย ปิด Dropout และใช้ running stats ของ BatchNorm"
+        },
+        {
+          "term": "ModelCheckpoint",
+          "answer": "callback ที่บันทึกโมเดลที่ดีที่สุดระหว่างการฝึกโดยอัตโนมัติ"
+        },
+        {
+          "term": "Architecture",
+          "answer": "โครงสร้างชั้นต่าง ๆ ของโมเดล เช่น Conv และ Dense"
+        }
+      ]
+    },
+    {
+      "id": "q4204",
+      "source": "IMG_4204.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ฟอร์แมต .keras มีลักษณะ",
+      "options": [
+        "เก็บเฉพาะสถาปัตยกรรม",
+        "ใช้กับ PyTorch เท่านั้น",
+        "เก็บ architecture, weights และ optimizer state ไว้ในไฟล์เดียวครบทุกอย่าง",
+        "โฟลเดอร์สำหรับ TF Serving เท่านั้น",
+        "เก็บเฉพาะน้ำหนัก"
+      ],
+      "answer": 2,
+      "explanation": "ไฟล์ .keras เก็บ architecture, weights และ optimizer state ไว้ในไฟล์เดียว"
+    },
+    {
+      "id": "q4205",
+      "source": "IMG_4205.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ในศัพท์ Docker \"Image\" คือ",
+      "options": [
+        "ไฟล์คำสั่งที่ใช้สร้าง container",
+        "แม่แบบที่บรรจุทุกอย่างไว้ สร้างขึ้นจาก Dockerfile",
+        "instance ที่กำลังทำงานอยู่จริงบนเครื่อง",
+        "โปรแกรมตรวจโค้ด",
+        "ไฟล์ภาพทดสอบโมเดล"
+      ],
+      "answer": 1,
+      "explanation": "Image คือแม่แบบที่สร้างจาก Dockerfile บรรจุแอปและสภาพแวดล้อม (a คือ Dockerfile, c คือ container)"
+    },
+    {
+      "id": "q4206",
+      "source": "IMG_4206.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ข้อใด \"ไม่ใช่\" ประโยชน์ของ Model Serialization",
+      "options": [
+        "นำไปใช้งานบนเซิร์ฟเวอร์/มือถือ/edge",
+        "ฝึกต่อจากจุดที่หยุดได้",
+        "ทำให้โมเดลมีความแม่นยำสูงขึ้นโดยอัตโนมัติ",
+        "แชร์โมเดลให้ผู้อื่นได้",
+        "ไม่ต้องฝึกซ้ำ โหลดมาทำนายได้ทันที"
+      ],
+      "answer": 2,
+      "explanation": "การบันทึกโมเดลไม่ได้ทำให้แม่นยำขึ้น มันแค่เก็บสิ่งที่เรียนรู้ไว้ให้นำกลับมาใช้"
+    },
+    {
+      "id": "q4207",
+      "source": "IMG_4207.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "deploy เพื่อทำนายอย่างเดียว จำเป็นต้องมีองค์ประกอบใด",
+      "options": [
+        "Architecture, Weights และ Optimizer State",
+        "เฉพาะ Training Config และ LR",
+        "เฉพาะ Optimizer State",
+        "Optimizer State และ Training Config",
+        "Architecture และ Weights เท่านั้น"
+      ],
+      "answer": 4,
+      "explanation": "ถ้าจะทำนายอย่างเดียว ต้องมีแค่ architecture กับ weights ส่วน optimizer state จำเป็นเฉพาะเมื่อจะฝึกต่อ"
+    },
+    {
+      "id": "q4208",
+      "source": "IMG_4208.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "quantize จาก FP32 เป็น INT8 มีผลอย่างไร",
+      "options": [
+        "ไฟล์ใหญ่ขึ้นแต่เร็วขึ้น",
+        "เล็กลงแต่ช้าลง",
+        "ไม่เปลี่ยน",
+        "แม่นยำขึ้นสูงสุด",
+        "ขนาดไฟล์เล็กลงและความเร็วเพิ่มขึ้นมาก แต่ความแม่นยำอาจลดลงบ้าง"
+      ],
+      "answer": 4,
+      "explanation": "INT8 ใช้ 8 บิตแทน 32 บิต ไฟล์เล็กลงราว 4 เท่าและเร็วขึ้นมาก แลกกับความแม่นยำที่อาจลดลงเล็กน้อย"
+    },
+    {
+      "id": "q4209",
+      "source": "IMG_4209.JPG",
+      "module": "m7",
+      "type": "mc",
+      "question": "ทำไมต้องเรียก model.eval() ก่อนทำนาย",
+      "options": [
+        "แปลงเป็น ONNX",
+        "เพิ่มความเร็วฝึก",
+        "บันทึกโมเดลอัตโนมัติและเริ่ม no_grad อัตโนมัติ",
+        "เพราะ Dropout และ BatchNorm ทำงานต่างกันระหว่างโหมดฝึกกับโหมดใช้งาน",
+        "ลดขนาดไฟล์"
+      ],
+      "answer": 3,
+      "explanation": "Dropout ปิดนิวรอนเฉพาะตอนฝึก และ BatchNorm ต้องใช้ running stats ตอนทำนาย model.eval() สลับพฤติกรรมเหล่านี้ (การปิด gradient ต้องใช้ torch.no_grad แยก)"
+    },
+    {
+      "id": "m4251",
+      "source": "IMG_4251.JPG",
+      "module": "m8",
+      "type": "match",
+      "question": "จับคู่กรณีศึกษา (บทเรียน 8.3) กับเทคนิคหลักที่ใช้",
+      "pairs": [
+        {
+          "term": "Instance Segmentation",
+          "answer": "Mask R-CNN หรือ YOLO-seg"
+        },
+        {
+          "term": "Image Classification",
+          "answer": "CNN กับ Transfer Learning"
+        },
+        {
+          "term": "Human Activity Recognition",
+          "answer": "LSTM many-to-one กับสัญญาณเซนเซอร์"
+        },
+        {
+          "term": "Semantic Segmentation",
+          "answer": "U-Net / FCN"
+        },
+        {
+          "term": "Time Series Forecasting",
+          "answer": "LSTM/GRU กับ sliding window"
+        },
+        {
+          "term": "Object Detection",
+          "answer": "YOLO กับ Edge deployment"
+        }
+      ]
+    },
+    {
+      "id": "q4252",
+      "source": "IMG_4252.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "เทคนิคหลักในการบำรุงรักษาเชิงทำนาย",
+      "options": [
+        "LSTM/GRU วิเคราะห์อนุกรมเวลาเพื่อตรวจจับความผิดปกติ",
+        "Transfer Learning จำแนกผลไม้",
+        "YOLO บนสายพาน",
+        "CNN จำแนกชิ้นงานมีตำหนิ",
+        "U-Net แยกรอยโรค"
+      ],
+      "answer": 0,
+      "explanation": "Predictive maintenance ใช้ LSTM/GRU วิเคราะห์อนุกรมเวลาจากเซนเซอร์เครื่องจักร เพื่อจับความผิดปกติก่อนเครื่องเสีย"
+    },
+    {
+      "id": "q4253",
+      "source": "IMG_4253.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "Instance Seg ต่างจาก Semantic Seg อย่างไรตามกรณีศึกษา",
+      "options": [
+        "ไม่ต้องใช้ mask",
+        "ใช้ metric เดียวกับ Classification",
+        "ใช้ CNN classification อย่างเดียว",
+        "ใช้กับภาพผลไม้ไม่ได้",
+        "Instance Segmentation แยกและนับแต่ละชิ้นที่ติดกันได้ ไม่ใช่แค่แยกบริเวณ"
+      ],
+      "answer": 4,
+      "explanation": "Instance segmentation แยกและนับวัตถุแต่ละชิ้นได้แม้ติดกัน เช่น ผลไม้ที่วางชิดกัน ส่วน semantic บอกได้แค่บริเวณ"
+    },
+    {
+      "id": "q4254",
+      "source": "IMG_4254.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "เทคนิคเหมาะสุดสำหรับตรวจคุณภาพอัตโนมัติ (รอยร้าว รอยขีดข่วน) ในโรงงาน",
+      "options": [
+        "LSTM เซนเซอร์เครื่องจักร",
+        "Transfer Learning พยากรณ์สต็อก",
+        "Embedding+LSTM ข้อความร้องเรียน",
+        "CNN/YOLO และ Segmentation ตรวจหาตำหนิบนภาพชิ้นงาน",
+        "GRU สัญญาณเสียง"
+      ],
+      "answer": 3,
+      "explanation": "การตรวจตำหนิบนภาพชิ้นงานใช้ CNN/YOLO ระบุตำหนิ และ segmentation ระบุขอบเขตของรอยร้าวหรือรอยขีดข่วน"
+    },
+    {
+      "id": "q4255",
+      "source": "IMG_4255.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "สิ่งที่ควรกำหนดให้ชัดตั้งแต่ Problem Definition",
+      "options": [
+        "จำนวนสมาชิกในทีม",
+        "จำนวนบรรทัดโค้ด",
+        "ประเภทงาน เกณฑ์ความสำเร็จ และข้อจำกัดของโปรเจกต์",
+        "ชื่อเฟรมเวิร์กเว็บ",
+        "สีของกราฟ"
+      ],
+      "answer": 2,
+      "explanation": "Problem definition ต้องกำหนดประเภทงาน เกณฑ์ความสำเร็จ (metric และเป้าหมาย) และข้อจำกัด เช่น ความเร็วหรือฮาร์ดแวร์"
+    },
+    {
+      "id": "q4256",
+      "source": "IMG_4256.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ข้อสังเกตสำคัญเกี่ยวกับการประยุกต์ DL ในอุตสาหกรรมต่าง ๆ",
+      "options": [
+        "ฮาร์ดแวร์ต้องเหมือนกันทุกกรณี",
+        "ทุกการประยุกต์ใช้ชุดเครื่องมือเดียวกัน ต่างกันที่โจทย์ ข้อมูล และฮาร์ดแวร์",
+        "การเกษตรใช้เทคนิคเดียวกับโรงงานไม่ได้",
+        "ต้องใช้สถาปัตยกรรมต่างกันโดยสิ้นเชิง",
+        "การแพทย์เท่านั้นที่ใช้ DL ได้จริง"
+      ],
+      "answer": 1,
+      "explanation": "ทุกอุตสาหกรรมใช้ชุดเครื่องมือเดียวกัน (CNN, YOLO, U-Net, LSTM) ที่ต่างคือโจทย์ ข้อมูล และฮาร์ดแวร์"
+    },
+    {
+      "id": "q4257",
+      "source": "IMG_4257.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ระบบคัดแยกขยะอัตโนมัติบนสายพานใช้เทคนิคใด",
+      "options": [
+        "YOLO detection ร่วมกับ Edge deployment บนอุปกรณ์อย่าง Jetson",
+        "U-Net + วิเคราะห์เสียง",
+        "LSTM + IoT ความชื้น",
+        "CNN classification + tracker",
+        "GRU + ระบบแนะนำสินค้า"
+      ],
+      "answer": 0,
+      "explanation": "ระบบคัดแยกขยะบนสายพานใช้ YOLO ตรวจจับวัตถุ และ deploy บน edge อย่าง Jetson เพื่อความเร็วแบบเรียลไทม์"
+    },
+    {
+      "id": "m4258",
+      "source": "IMG_4258.JPG",
+      "module": "m8",
+      "type": "match",
+      "question": "จับคู่การประยุกต์ใช้ในอุตสาหกรรม (บทเรียน 8.1) กับเทคนิคหลัก",
+      "pairs": [
+        {
+          "term": "เฝ้าระวังสัญญาณชีพผู้สูงอายุ",
+          "answer": "LSTM ร่วมกับ IoT และ Edge deployment"
+        },
+        {
+          "term": "วิเคราะห์ภาพทางการแพทย์",
+          "answer": "CNN classification ร่วมกับ U-Net segmentation"
+        },
+        {
+          "term": "การให้น้ำอัจฉริยะทางการเกษตร",
+          "answer": "LSTM อนุกรมเวลาร่วมกับข้อมูลเซนเซอร์ IoT"
+        },
+        {
+          "term": "ตรวจสอบคุณภาพอัตโนมัติในโรงงาน",
+          "answer": "CNN/YOLO และ Segmentation ตรวจหาตำหนิ"
+        },
+        {
+          "term": "การบำรุงรักษาเชิงทำนาย",
+          "answer": "LSTM/GRU วิเคราะห์ข้อมูลเซนเซอร์ตามเวลา"
+        },
+        {
+          "term": "จำแนกความสุกของผลไม้",
+          "answer": "CNN classification ร่วมกับ Transfer Learning"
+        }
+      ]
+    },
+    {
+      "id": "q4259",
+      "source": "IMG_4259.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ทำไมงานภาพการแพทย์ให้ความสำคัญ Recall สูง",
+      "options": [
+        "ใช้พลังงานน้อย",
+        "ให้ Precision เท่ากับ Recall",
+        "เพื่อลดการพลาดวินิจฉัยผู้ป่วยที่เป็นโรคจริง (False Negative)",
+        "เร็วขึ้นบน edge",
+        "ลดจำนวนภาพฝึก"
+      ],
+      "answer": 2,
+      "explanation": "การพลาดผู้ป่วยที่เป็นโรคจริง (FN) อันตรายกว่าผลบวกลวงที่แพทย์ตรวจซ้ำได้ งานแพทย์จึงต้องการ recall สูง"
+    },
+    {
+      "id": "q4260",
+      "source": "IMG_4260.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ถ้า preprocessing ตอน deploy ไม่ตรงกับตอนฝึก เกิดอะไร",
+      "options": [
+        "ไฟล์เล็กลง",
+        "Recall สูงขึ้นเสมอ",
+        "ระบบหยุดโดยไม่มี error",
+        "ความเร็วลดลง",
+        "ผลลัพธ์ของโมเดลหลัง deploy จะเพี้ยนไปจากที่ฝึกไว้"
+      ],
+      "answer": 4,
+      "explanation": "ถ้า preprocessing ตอนใช้งานต่างจากตอนฝึก ข้อมูลที่เข้าโมเดลจะต่างจากที่เคยเห็น ผลจึงเพี้ยนโดยไม่มี error เตือน"
+    },
+    {
+      "id": "q4261",
+      "source": "IMG_4261.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ความเข้าใจผิดที่พบบ่อยของผู้เริ่มต้นเกี่ยวกับโปรเจกต์ DL",
+      "options": [
+        "ต้องเก็บข้อมูลให้มากที่สุดก่อน",
+        "คิดว่าโปรเจกต์ AI คือการสร้างและฝึกโมเดลเท่านั้น",
+        "ต้องใช้ฮาร์ดแวร์แพงที่สุด",
+        "ต้อง deploy บน cloud เท่านั้น",
+        "ต้องใช้โมเดลซับซ้อนที่สุดตั้งแต่แรก"
+      ],
+      "answer": 1,
+      "explanation": "ผู้เริ่มต้นมักคิดว่าโปรเจกต์ AI คือฝึกโมเดลอย่างเดียว ทั้งที่งานส่วนใหญ่อยู่ที่ข้อมูล การ deploy และการดูแลรักษา"
+    },
+    {
+      "id": "m4262",
+      "source": "IMG_4262.JPG",
+      "module": "m8",
+      "type": "match",
+      "question": "จับคู่ขั้นตอนในวงจรชีวิตโปรเจกต์ Deep Learning (บทเรียน 8.2) กับสิ่งที่ทำ",
+      "pairs": [
+        {
+          "term": "Problem Definition",
+          "answer": "กำหนดปัญหา ประเภทงาน และเกณฑ์ความสำเร็จ"
+        },
+        {
+          "term": "Data Collection and Preparation",
+          "answer": "เก็บ ติดป้าย ทำความสะอาด และเพิ่มข้อมูล"
+        },
+        {
+          "term": "Model Selection",
+          "answer": "เลือกสถาปัตยกรรมให้ตรงกับประเภทงาน"
+        },
+        {
+          "term": "Training",
+          "answer": "ฝึกโมเดลพร้อมป้องกัน overfitting"
+        },
+        {
+          "term": "Evaluation and Tuning",
+          "answer": "วัดผลด้วย metric และจูน hyperparameter"
+        },
+        {
+          "term": "Deployment",
+          "answer": "ส่งออกโมเดลและติดตั้งใช้งานจริง"
+        },
+        {
+          "term": "Monitoring and Maintenance",
+          "answer": "เฝ้าดูประสิทธิภาพและ retrain เมื่อจำเป็น"
+        }
+      ]
+    },
+    {
+      "id": "q4263",
+      "source": "IMG_4263.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "กรณีศึกษาบทเรียน 8.3 แบ่งเป็นกี่สายงานหลัก",
+      "options": [
+        "2 สาย ได้แก่ Computer Vision และ Sequential Data",
+        "1 สาย CV",
+        "2 สาย CV และ Robotics",
+        "3 สาย CV, Sequential, NLP",
+        "4 สาย"
+      ],
+      "answer": 0,
+      "explanation": "กรณีศึกษาบทเรียน 8.3 แบ่งเป็น 2 สาย คือ Computer Vision และ Sequential Data"
+    },
+    {
+      "id": "q4264",
+      "source": "IMG_4264.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "เวลาส่วนใหญ่ของโปรเจกต์ DL หมดไปกับขั้นตอนใด",
+      "options": [
+        "การเตรียมข้อมูลและการ deploy/ดูแลรักษา",
+        "เขียนรายงาน",
+        "เลือกสถาปัตยกรรมอย่างเดียว",
+        "เทรนโมเดลอย่างเดียว",
+        "ประชุมวางแผน"
+      ],
+      "answer": 0,
+      "explanation": "เวลาส่วนใหญ่หมดไปกับการเตรียมข้อมูล และการ deploy กับดูแลรักษาหลังขึ้นระบบจริง"
+    },
+    {
+      "id": "q4265",
+      "source": "IMG_4265.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ทำไมการ monitor และ retrain หลัง deploy สำคัญ",
+      "options": [
+        "กฎหมายบังคับทุกเดือน",
+        "retrain แล้วไม่ต้องเก็บข้อมูลใหม่",
+        "ลดขนาดไฟล์",
+        "เพราะสภาพแวดล้อมจริงเปลี่ยนไปเรื่อย ๆ ทำให้โมเดลเดิมอาจแย่ลงในอนาคต",
+        "deploy ครั้งแรกผิดเสมอ"
+      ],
+      "answer": 3,
+      "explanation": "โลกจริงเปลี่ยนไปเรื่อย ๆ (data drift) โมเดลเดิมจึงแย่ลงได้ ต้อง monitor และ retrain เมื่อจำเป็น"
+    },
+    {
+      "id": "q4266",
+      "source": "IMG_4266.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "การให้น้ำอัจฉริยะและพยากรณ์อากาศในภาคเกษตรใช้เทคนิคใด",
+      "options": [
+        "Mask R-CNN รายต้น",
+        "Embedding + โมเดลภาษา",
+        "LSTM อนุกรมเวลาร่วมกับข้อมูลเซนเซอร์ IoT",
+        "CNN + Transfer Learning",
+        "YOLO + โดรน"
+      ],
+      "answer": 2,
+      "explanation": "การให้น้ำอัจฉริยะใช้ LSTM วิเคราะห์อนุกรมเวลาจากเซนเซอร์ IoT เช่น ความชื้นดินและสภาพอากาศ"
+    },
+    {
+      "id": "q4267",
+      "source": "IMG_4267.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "เทคนิคแยกขอบเขตเนื้องอก/รอยโรคจากภาพการแพทย์ระดับพิกเซล",
+      "options": [
+        "YOLO object detection",
+        "U-Net segmentation",
+        "Transfer Learning สำหรับข้อความ",
+        "GRU สัญญาณเสียง",
+        "LSTM time series"
+      ],
+      "answer": 1,
+      "explanation": "U-Net แยกขอบเขตเนื้องอกหรือรอยโรคระดับพิกเซล และเป็นสถาปัตยกรรมที่เกิดมาเพื่อภาพการแพทย์"
+    },
+    {
+      "id": "q4268",
+      "source": "IMG_4268.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ผลประเมินไม่ถึงเกณฑ์เพราะ overfit ควรวนกลับไปทำอะไร",
+      "options": [
+        "ข้ามไป deploy",
+        "เพิ่มความซับซ้อนโมเดล",
+        "ใช้ test แทน validation",
+        "ลดข้อมูล validation",
+        "เพิ่ม regularization ในขั้นตอนการฝึกโมเดล"
+      ],
+      "answer": 4,
+      "explanation": "Overfit แก้โดยวนกลับไปขั้นฝึก แล้วเพิ่ม regularization เช่น dropout, weight decay, augmentation หรือ early stopping"
+    },
+    {
+      "id": "q4270",
+      "source": "IMG_4270.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "metric หลักประเมินงาน Object Detection ในกรณีศึกษา",
+      "options": [
+        "Accuracy และ Precision เท่านั้น",
+        "R-squared และ MAPE",
+        "Dice coefficient อย่างเดียว",
+        "MAE และ RMSE",
+        "mAP@0.5, mAP@[0.5:0.95] และ IoU"
+      ],
+      "answer": 4,
+      "explanation": "Object detection วัดด้วย mAP@0.5, mAP@[0.5:0.95] และ IoU"
+    },
+    {
+      "id": "q4271",
+      "source": "IMG_4271.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ข้อผิดพลาดที่พบบ่อยในขั้นเก็บข้อมูล",
+      "options": [
+        "ไม่ได้เก็บข้อมูลในสภาพที่ต่างจากการใช้งานจริง (domain shift)",
+        "กล้องละเอียดเกินจำเป็น",
+        "เก็บเฉพาะในห้องแล็บเพราะต้นทุนต่ำ",
+        "เก็บมากเกินงบ",
+        "ติดป้ายเร็วเกินไป"
+      ],
+      "answer": 0,
+      "explanation": "ข้อผิดพลาดที่พบบ่อยคือเก็บข้อมูลในสภาพที่ไม่ตรงกับการใช้งานจริง (เช่น แสง มุมกล้อง) จึงเกิด domain shift ตอนใช้งาน"
+    },
+    {
+      "id": "q4272",
+      "source": "IMG_4272.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "เทคนิคสำหรับ Semantic Segmentation ในกรณีศึกษา เช่น แยกพื้นที่ใบไหม้บนใบพืช",
+      "options": [
+        "Embedding BiLSTM",
+        "Mask R-CNN เฉพาะงานนับจำนวน",
+        "YOLO",
+        "LSTM multivariate",
+        "U-Net / FCN"
+      ],
+      "answer": 4,
+      "explanation": "งานแยกพื้นที่ใบไหม้ระดับพิกเซลเป็น semantic segmentation จึงใช้ U-Net หรือ FCN"
+    },
+    {
+      "id": "q4273",
+      "source": "IMG_4273.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "Predictive Maintenance ใช้ข้อมูลประเภทใดเป็นหลัก",
+      "options": [
+        "ภาพดาวเทียม",
+        "ข้อมูลเซนเซอร์ตามเวลา เช่น การสั่นสะเทือน อุณหภูมิ เสียง",
+        "เสียงพูดผู้ปฏิบัติงาน",
+        "ข้อความรีวิว",
+        "ภาพชิ้นงาน"
+      ],
+      "answer": 1,
+      "explanation": "Predictive maintenance ใช้ข้อมูลเซนเซอร์ตามเวลา เช่น การสั่นสะเทือน อุณหภูมิ เสียง"
+    },
+    {
+      "id": "q4274",
+      "source": "IMG_4274.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "บทเรียนแนะนำให้เริ่มเลือกโมเดลอย่างไรในขั้น Model Selection",
+      "options": [
+        "deploy ก่อนแล้วค่อยเลือก",
+        "ใช้โมเดลเดียวกับโปรเจกต์อื่นเสมอ",
+        "สุ่มเลือก",
+        "เริ่มจากโมเดลใหญ่ซับซ้อนที่สุด",
+        "เริ่มจากโมเดลง่าย ๆ เป็น baseline ก่อนแล้วค่อยปรับให้ซับซ้อนขึ้น"
+      ],
+      "answer": 4,
+      "explanation": "เริ่มจากโมเดลง่ายเป็น baseline ก่อน ถ้าไม่ผ่านเกณฑ์ค่อยเพิ่มความซับซ้อน"
+    },
+    {
+      "id": "q4275",
+      "source": "IMG_4275.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "ทำไมกรณีศึกษา Stock Price Prediction ควรระวังเป็นพิเศษ",
+      "options": [
+        "เก็บเป็น CSV ไม่ได้",
+        "กฎหมายห้ามใช้ DL กับข้อมูลการเงิน",
+        "เพราะตลาดหุ้นได้รับอิทธิพลจากปัจจัยคาดเดาไม่ได้ ผลจากข้อมูลอดีตอาจไม่น่าเชื่อถือ",
+        "LSTM ประมวลผลอนุกรมเวลาไม่ได้",
+        "ต้องใช้ CNN เท่านั้น"
+      ],
+      "answer": 2,
+      "explanation": "ราคาหุ้นได้รับผลจากข่าวและปัจจัยที่คาดเดาไม่ได้ รูปแบบจากข้อมูลอดีตจึงอาจไม่ช่วยทำนายอนาคตได้จริง"
+    },
+    {
+      "id": "q4276",
+      "source": "IMG_4276.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "จำแนกความสุกของผลไม้จากภาพ ใช้เทคนิคหลักร่วมกับอะไรเมื่อข้อมูลจำกัด",
+      "options": [
+        "YOLO กับ Edge deployment",
+        "GRU + IoT ความชื้นดิน",
+        "U-Net + Augmentation อย่างเดียว",
+        "CNN classification ร่วมกับ Transfer Learning",
+        "LSTM กับ Anomaly Detection"
+      ],
+      "answer": 3,
+      "explanation": "ข้อมูลภาพผลไม้มักมีจำกัด จึงใช้ CNN ที่ฝึกล่วงหน้าแล้วมาต่อยอดด้วย transfer learning"
+    },
+    {
+      "id": "q4277",
+      "source": "IMG_4277.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "Medical Image Analysis และ Industrial Inspection มีจุดร่วมด้าน metric",
+      "options": [
+        "ใช้ MAE/RMSE",
+        "เน้นความเร็วมากกว่าความแม่นยำ",
+        "ทั้งสองเน้นค่า Recall สูงเนื่องจากข้อมูลมักไม่สมดุลและพลาดไม่ได้",
+        "ใช้ Accuracy อย่างเดียว",
+        "ไม่ต้องวัดผล"
+      ],
+      "answer": 2,
+      "explanation": "ทั้งสองงานข้อมูลไม่สมดุล (ตำหนิหรือรอยโรคมีน้อย) และการพลาดมีต้นทุนสูง จึงเน้น recall"
+    },
+    {
+      "id": "q4278",
+      "source": "IMG_4278.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "Image Classification ในกรณีศึกษาใช้เทคนิคหลักร่วมกับอะไรเมื่อข้อมูลจำกัด",
+      "options": [
+        "YOLO + Edge",
+        "LSTM + Anomaly Detection",
+        "CNN ร่วมกับ Transfer Learning และ Augmentation",
+        "GRU + IoT",
+        "U-Net + Instance Segmentation"
+      ],
+      "answer": 2,
+      "explanation": "เมื่อข้อมูลจำกัด ใช้ CNN ร่วมกับ transfer learning และ augmentation เพื่อเพิ่มความหลากหลายของข้อมูล"
+    },
+    {
+      "id": "q4279",
+      "source": "IMG_4279.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "บทเรียน 8.1 กล่าวถึงการประยุกต์ DL ในกี่โดเมนอุตสาหกรรม",
+      "options": [
+        "3 โดเมน ได้แก่ โรงงานอัจฉริยะ การแพทย์ และเกษตร",
+        "4 โดเมน รวมการเงิน",
+        "5 โดเมน",
+        "1 โดเมน",
+        "2 โดเมน"
+      ],
+      "answer": 0,
+      "explanation": "บทเรียน 8.1 ครอบคลุม 3 โดเมน คือ โรงงานอัจฉริยะ การแพทย์ และเกษตร"
+    },
+    {
+      "id": "q4280",
+      "source": "IMG_4280.JPG",
+      "module": "m8",
+      "type": "mc",
+      "question": "HAR ใช้ LSTM แบบใดกับข้อมูลอะไร",
+      "options": [
+        "YOLO กับภาพดาวเทียม",
+        "LSTM one-to-many กับภาพนิ่ง",
+        "LSTM many-to-one กับสัญญาณเซนเซอร์ accelerometer/IMU ตามเวลา",
+        "CNN กับข้อความรีวิว",
+        "U-Net กับภาพ X-ray"
+      ],
+      "answer": 2,
+      "explanation": "HAR ใช้ LSTM แบบ many-to-one รับสัญญาณ accelerometer/IMU เป็นลำดับ แล้วให้ผลลัพธ์เดียวคือกิจกรรม"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ML ขั้นสูง ทบทวนข้อสอบ</title>
+  <meta name="description" content="ฝึกทำข้อสอบวิชาการเรียนรู้ของเครื่องขั้นสูง ใช้ได้ทั้งคอมพิวเตอร์และมือถือ รวมถึงตอนออฟไลน์">
+  <meta name="theme-color" content="#2f5bd3">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ML Quiz">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    // ตั้งธีมก่อนวาดหน้า เพื่อไม่ให้หน้าจอกะพริบ
+    try {
+      var t = localStorage.getItem('mlq-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <h1 class="title">ทบทวนข้อสอบ ML ขั้นสูง</h1>
+        <p class="course" id="course">กำลังโหลด…</p>
+      </div>
+      <button type="button" class="btn btn-ghost theme-btn" id="themeBtn" aria-label="สลับโหมดสว่าง/มืด">
+        <span class="theme-icon" aria-hidden="true"></span>
+        <span class="theme-text" id="themeText">โหมดมืด</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout" id="app">
+    <nav class="sets" aria-label="เลือกชุดข้อสอบ">
+      <div class="sets-scroll" id="sets"></div>
+    </nav>
+
+    <section class="panel controls" aria-label="ตัวกรองและตัวเลือก">
+      <div class="chips">
+        <label class="chip"><input type="checkbox" id="optShuffleOpts"> <span>สลับตัวเลือก</span></label>
+        <label class="chip"><input type="checkbox" id="optShuffleQs"> <span>สลับลำดับข้อ</span></label>
+        <label class="chip"><input type="checkbox" id="optOnlyWrong"> <span>เฉพาะข้อที่ผิด</span></label>
+        <label class="chip"><input type="checkbox" id="optOnlyUnanswered"> <span>เฉพาะข้อที่ยังไม่ทำ</span></label>
+      </div>
+      <button type="button" class="btn btn-ghost btn-danger-text" id="clearBtn">ล้างคำตอบชุดนี้</button>
+      <div class="confirm" id="confirmBox" hidden role="alertdialog" aria-labelledby="confirmText">
+        <p id="confirmText"></p>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-danger" id="confirmYes">ยืนยันล้าง</button>
+          <button type="button" class="btn btn-ghost" id="confirmNo">ยกเลิก</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel summary" aria-label="สรุปคะแนน">
+      <dl class="stats">
+        <div><dt>ทำแล้ว</dt><dd id="stDone">0/0</dd></div>
+        <div><dt>ถูก</dt><dd id="stOk" class="c-ok">0</dd></div>
+        <div><dt>ผิด</dt><dd id="stBad" class="c-bad">0</dd></div>
+        <div><dt>ถูกต้อง</dt><dd id="stPct">–</dd></div>
+      </dl>
+      <div class="progress" role="img" id="progress" aria-label="ความคืบหน้า">
+        <span class="progress-ok" id="pgOk"></span><span class="progress-bad" id="pgBad"></span>
+      </div>
+    </section>
+
+    <article class="panel card" id="card" aria-live="polite">
+      <p class="loading">กำลังโหลดข้อสอบ…</p>
+    </article>
+
+    <div class="nav" id="nav">
+      <button type="button" class="btn btn-nav" id="prevBtn" aria-label="ข้อก่อนหน้า (ลูกศรซ้าย)">‹ ข้อก่อนหน้า</button>
+      <span class="nav-pos" id="navPos" aria-hidden="true"></span>
+      <button type="button" class="btn btn-nav btn-primary" id="nextBtn" aria-label="ข้อถัดไป (ลูกศรขวา)">ข้อถัดไป ›</button>
+    </div>
+
+    <section class="panel map-panel" aria-labelledby="mapTitle">
+      <div class="map-head">
+        <h2 id="mapTitle">แผนผังข้อสอบ</h2>
+        <ul class="legend" aria-label="คำอธิบายสี">
+          <li><span class="dot dot-ok"></span>ถูก</li>
+          <li><span class="dot dot-bad"></span>ผิด</li>
+          <li><span class="dot dot-none"></span>ยังไม่ทำ</li>
+        </ul>
+      </div>
+      <div class="map" id="map"></div>
+      <p class="hint">คีย์ลัด: 1–5 เลือกคำตอบ · ← → เปลี่ยนข้อ · บนมือถือปัดซ้าย/ขวาที่การ์ดเพื่อเปลี่ยนข้อ</p>
+    </section>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
